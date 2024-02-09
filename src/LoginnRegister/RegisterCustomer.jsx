@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from 'react'
 
-const RegisterUser = () => {
+const RegisterCustomer = () => {
 
   const [formValid, setFormValid] = useState(false);
 
@@ -34,14 +34,14 @@ const RegisterUser = () => {
         var fnamep = /^[A-Z][a-z]*$/;
         valid = fnamep.test(value);
         if (!valid) {
-          error = "Invalid empno";
+          error = "Invalid Name";
         }
         return { error, valid };
       case "lname":
         var lnmp = /^[A-Z][a-z]*$/;
         valid = lnmp.test(value);
         if (!valid) {
-          error = "Invalid Name";
+          error = "Invalid SurName";
         }
         return { error, valid };
       case "email":
@@ -49,14 +49,14 @@ const RegisterUser = () => {
 
         valid = mailp.test(value);
         if (!valid) {
-          error = "Invalid Job title";
+          error = "Invalid email title";
         }
         return { error, valid };
       case "password":
         var pwdp = /^\d{1,4}(?:.\d{1,2})?$/;
         valid = pwdp.test(value);
         if (!valid) {
-          error = "Salary amount exceeded";
+          error = "Password pattern not satisfied";
         }
         return { error, valid };
         case "username":
@@ -222,4 +222,4 @@ const RegisterUser = () => {
   )
 }
 
-export default RegisterUser
+export default RegisterCustomer

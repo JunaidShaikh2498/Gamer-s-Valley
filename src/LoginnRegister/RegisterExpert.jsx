@@ -33,14 +33,14 @@ const RegisterExpert = () => {
         var fnamep = /^[A-Z][a-z]*$/;
         valid = fnamep.test(value);
         if (!valid) {
-          error = "Invalid empno";
+          error = "Invalid Name";
         }
         return { error, valid };
       case "lname":
         var lnmp = /^[A-Z][a-z]*$/;
         valid = lnmp.test(value);
         if (!valid) {
-          error = "Invalid Name";
+          error = "Invalid SurName";
         }
         return { error, valid };
       case "email":

@@ -1,75 +1,76 @@
-import React from "react";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBInput,
-} from "mdb-react-ui-kit";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../Slices/loginSlice";
+import { useNavigate } from "react-router-dom";
+import CustomerDash from "./CustomerDash";
+
 const Login = () => {
+  const users = useSelector((state) => state.logged.users);
+  const dispatch = useDispatch();
+
+  const loginState = useSelector((state)=>state.logged.loggedIn)
+  const navigate = useNavigate();
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = loginData;
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const user = users.find(
+      (u) => u.username === username && u.password === password
+    );
+    if (user) {
+      dispatch(login(user));
+      navigate("/dashboard");
+    } else navigate("/login");
+  };
+
   return (
     <div>
-      <MDBContainer className="my-5 gradient-form">
-        <MDBRow>
-          <MDBCol col="6" className="mb-5">
-            <div className="d-flex flex-column ms-5">
-              <div className="text-center">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                  style={{ width: "185px" }}
-                  alt="logo"
-                />
-                <h4 className="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
-              </div>
-
-              <p>Please login to your account</p>
-
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Email address"
-                id="form1"
-                type="email"
-              />
-              <MDBInput
-                wrapperClass="mb-4"
-                label="Password"
-                id="form2"
-                type="password"
-              />
-
-              <div className="text-center pt-1 mb-5 pb-1">
-                <MDBBtn className="mb-4 w-100 gradient-custom-2">
-                  Sign in
-                </MDBBtn>
-                <a className="text-muted" href="#!">
-                  Forgot password?
-                </a>
-              </div>
-
-              <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
-                <p className="mb-0">Don't have an account?</p>
-                <MDBBtn outline className="mx-2" color="danger">
-                  Danger
-                </MDBBtn>
-              </div>
-            </div>
-          </MDBCol>
-
-          <MDBCol col="6" className="mb-5">
-            <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
-              <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                <h4 class="mb-4">We are more than just a company</h4>
-                <p class="small mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-              </div>
-            </div>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+      {!loginState?<form>
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">
+            Email
+          </label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="inputUname"
+              placeholder="Username"
+              value={loginData.username}
+              onChange={(e)=>{setLoginData(prevState=>({
+                ...prevState,
+                username:e.target.value
+              }))}}
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">
+            Password
+          </label>
+          <div class="col-sm-10">
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword3"
+              placeholder="Password"
+              value={loginData.password}
+              onChange={(e)=>{setLoginData(prevState=>({
+                ...prevState,
+                password:e.target.value
+              }))}}
+            />
+          </div>
+        </div>
+        <div>
+          <input type="submit" value="Login" className="btn btn-success" onClick={(e)=>{handleLogin(e)}} />
+        </div>
+      </form>:<CustomerDash/>}
+      
     </div>
   );
 };
