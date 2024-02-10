@@ -2,34 +2,48 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
-import CustomerDash from "./CustomerDash";
 
 const Login = () => {
-  const users = useSelector((state) => state.logged.users);
   const dispatch = useDispatch();
 
-  const loginState = useSelector((state)=>state.logged.loggedIn)
+  const loginState = useSelector((state) => state.logged.loggedIn);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
   });
-  const { username, password } = loginData;
-
+  const users = [
+    {
+      username:"cust1",
+      password:"pass123",
+      role:1
+    },
+    {
+      username:"exp1",
+      password:"pwd123",
+      role:2
+    },
+  ]
   const handleLogin = (e) => {
     e.preventDefault();
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
-    if (user) {
+    const user = users.find(u=>u.username===loginData.username && u.password===loginData.password)
+   
       dispatch(login(user));
-      navigate("/dashboard");
-    } else navigate("/login");
+      if(loginState && user.role===1){
+        navigate("/dashboard");
+      }
+      else if(loginState && user.role===2){
+        navigate('/expdash')
+      }
+      else{
+        navigate("/login");
+      }
+      
   };
 
   return (
-    <div>
-      {!loginState?<form>
+    <div className="form-container">
+      <form className="fonm-control">
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">
             Email
@@ -41,10 +55,12 @@ const Login = () => {
               id="inputUname"
               placeholder="Username"
               value={loginData.username}
-              onChange={(e)=>{setLoginData(prevState=>({
-                ...prevState,
-                username:e.target.value
-              }))}}
+              onChange={(e) => {
+                setLoginData((prevState) => ({
+                  ...prevState,
+                  username: e.target.value,
+                }));
+              }}
             />
           </div>
         </div>
@@ -59,18 +75,26 @@ const Login = () => {
               id="inputPassword3"
               placeholder="Password"
               value={loginData.password}
-              onChange={(e)=>{setLoginData(prevState=>({
-                ...prevState,
-                password:e.target.value
-              }))}}
+              onChange={(e) => {
+                setLoginData((prevState) => ({
+                  ...prevState,
+                  password: e.target.value,
+                }));
+              }}
             />
           </div>
         </div>
         <div>
-          <input type="submit" value="Login" className="btn btn-success" onClick={(e)=>{handleLogin(e)}} />
+          <input
+            type="submit"
+            value="Login"
+            className="btn btn-success"
+            onClick={(e) => {
+              handleLogin(e);
+            }}
+          />
         </div>
-      </form>:<CustomerDash/>}
-      
+      </form>
     </div>
   );
 };

@@ -2,7 +2,7 @@
     align-items: center;
     text-align: center;
   }
-  body {
+  .form-container{
     /* fallback for old browsers */
     background: #6a11cb;
   
