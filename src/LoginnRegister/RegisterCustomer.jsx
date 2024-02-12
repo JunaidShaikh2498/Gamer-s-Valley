@@ -34,7 +34,7 @@ const RegisterCustomer = () => {
         var fnamep = /^[A-Z][a-z]*$/;
         valid = fnamep.test(value);
         if (!valid) {
-          error = "Invalid Name";
+          error = "Starts with capital letter";
         }
         return { error, valid };
       case "lname":
@@ -76,9 +76,10 @@ const RegisterCustomer = () => {
     fname: { value: "", valid: false, touched: false, error: "" },
     lname: { value: "", valid: false, touched: false, error: "" },
     email: { value: "", valid: false, touched: false, error: "" },
+    contact:{ value: "", valid: false, touched: false, error: "" },
+    address:{ value: "", valid: false, touched: false, error: "" },
     username:{value: "", valid: false, touched: false, error: ""},
-    password: { value: "", valid: false, touched: false, error: "" },
-    address: { value: "", valid: false, touched: false, error: "" }
+    password: { value: "", valid: false, touched: false, error: "" }
   };
 
   const reducer = (state, action) => {
@@ -103,6 +104,8 @@ const RegisterCustomer = () => {
         fname: user.fname.value,
         lname: user.lname.value,
         email: user.email.value,
+        contact:user.contact.value,
+        address:user.address.value,
         username: user.username.value,
         password: user.password.value,
       }),
@@ -168,6 +171,44 @@ const RegisterCustomer = () => {
             }}
           />
           <span>{user.email.error}</span>
+        </div>
+        <div class="mb-3">
+          <label for="contact" class="form-label">
+            <b>Contact</b>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="contact"
+            placeholder="(eg- 8770695163)"
+            defaultValue={user.contact.value}
+            onChange={(e) => {
+              handleChange("contact", e.target.value);
+            }}
+            onBlur={(e) => {
+              handleChange("contact", e.target.value);
+            }}
+          />
+          <span>{user.contact.error}</span>
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">
+            <b>Address</b>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="address"
+            placeholder="(eg- Shivaji Nagar,Pune)"
+            defaultValue={user.address.value}
+            onChange={(e) => {
+              handleChange("address", e.target.value);
+            }}
+            onBlur={(e) => {
+              handleChange("address", e.target.value);
+            }}
+          />
+          <span>{user.address.error}</span>
         </div>
         
         

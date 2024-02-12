@@ -6,25 +6,32 @@ import { Provider } from 'react-redux';
 import store from './store';
 import RegisterCustomer from './LoginnRegister/RegisterCustomer';
 import ProductList from './products/ProductList';
+import { Navbar } from './Navbar/Navbar';
+import { About } from './Navbar/About';
+import { Register } from './Navbar/Register';
 
 function App() {
   return (
+    <>
+    <Navbar/>
     <Provider store={store}>
     <div className="App">
-        <Link to='/re'>Register Expert</Link>
-        <Link to='/rc'>Register Customer</Link>
-        <Link to='/login'>Login</Link>
-        <Link to='/prod'>Product List</Link>
-
+        
         <Routes>
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/dashboard' element={<CustomerDash/>}/>
           <Route path='/prod' element={<ProductList/>}/>
+          <Route path='/about' element={<About/>}/>
+          <Route path='/register' element={<Register/>}/>
+          <Route path='/home' element={<ProductList/>}/>
+
         </Routes>
+
     </div>
     </Provider>
+    </>
   );
 }
 
