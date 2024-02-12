@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
+import './RegisterCSS.css'
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -12,33 +13,36 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const users = [
-    {
-      username:"cust1",
-      password:"pass123",
-      role:1
-    },
-    {
-      username:"exp1",
-      password:"pwd123",
-      role:2
-    },
-  ]
+  const [role,setRole]=useState(0)
   const handleLogin = (e) => {
     e.preventDefault();
-    const user = users.find(u=>u.username===loginData.username && u.password===loginData.password)
-   
-      dispatch(login(user));
-      if(loginState && user.role===1){
-        navigate("/dashboard");
+    const options={
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body:JSON.stringify({
+        username:loginData.username,
+        password:loginData.password
+      })
+    }
+    fetch("http://localhost:8080/login",options)
+    .then((response)=>{return response.json()})
+    .then((data)=>{setRole(data)})
+      if(role===2){
+        dispatch(login())
+        if(loginState){
+          navigate("/home")
+        }
       }
-      else if(loginState && user.role===2){
-        navigate('/expdash')
+      if(role===3){
+        dispatch(login())
+        if(loginState){
+          navigate("/expdashboard")
+        }
       }
-      else{
-        navigate("/login");
+      if(role===-1){
+        alert("Invalid Credentials")
+        navigate("/login")
       }
-      
   };
 
   return (
@@ -46,14 +50,14 @@ const Login = () => {
       <form className="fonm-control">
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">
-            Email
+           <b>Username</b>
           </label>
-          <div class="col-sm-10">
+          
             <input
               type="text"
               class="form-control"
               id="inputUname"
-              placeholder="Username"
+              placeholder="(Enter your Username)"
               value={loginData.username}
               onChange={(e) => {
                 setLoginData((prevState) => ({
@@ -62,18 +66,17 @@ const Login = () => {
                 }));
               }}
             />
-          </div>
         </div>
         <div class="form-group row">
           <label for="inputPassword3" class="col-sm-2 col-form-label">
-            Password
+           <b> Password</b>
           </label>
-          <div class="col-sm-10">
+          
             <input
               type="password"
               class="form-control"
               id="inputPassword3"
-              placeholder="Password"
+              placeholder="(Enter your password)"
               value={loginData.password}
               onChange={(e) => {
                 setLoginData((prevState) => ({
@@ -82,7 +85,7 @@ const Login = () => {
                 }));
               }}
             />
-          </div>
+          
         </div>
         <div>
           <input
