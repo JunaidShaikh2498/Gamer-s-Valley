@@ -16,10 +16,10 @@ const products = [
 
 const ProductCard = ({ product }) => (
   <div className="product-card">
-    <div className="product-image"> <img src={product.image}/> </div>
+    <div className="product-image"> <img src={product.image} style={{height:'200px'}}/> </div>
     <div className="product-name">{product.name}</div>
     <div className="product-price">{product.price}</div>
-    <div className="product-description">{product.description}</div>
+    <span className="product-description">{product.description}</span>
   </div>
 );
 

@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from "react";
-
+import './RegisterCSS.css'
 const RegisterExpert = () => {
   const [formValid, setFormValid] = useState(false);
 
@@ -78,7 +78,8 @@ const RegisterExpert = () => {
     contact: {value: "", valid: false, touched: false, error: ""},
     username: { value: "", valid: false, touched: false, error: ""},
     experience:{ value: "", valid: false, touched: false, error: ""},
-    password: { value: "", valid: false, touched: false, error: "" }
+    password: { value: "", valid: false, touched: false, error: "" },
+    qualification: {value: "", valid: false, touched: false, error: "" }
   };
 
   const reducer = (state, action) => {
@@ -103,6 +104,7 @@ const RegisterExpert = () => {
         fname: expert.fname.value,
         lname: expert.lname.value,
         email: expert.email.value,
+        qualification: expert.qualification.value,
         username:expert.username.value,
         password: expert.password.value,
       }),
@@ -110,16 +112,17 @@ const RegisterExpert = () => {
   }
 
   return (
-    <div>
-      <form className="">
+    <div className="container">
+      <form >
         <div class="mb-3">
           <label for="exampleInputFname" class="form-label">
-            First Name
+          <b>  First Name</b>
           </label>
           <input
             type="text"
             class="form-control"
             id="fname"
+            
             aria-describedby="emailHelp"
             defaultValue={expert.fname.value}
             onChange={(e) => {
@@ -133,7 +136,7 @@ const RegisterExpert = () => {
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">
-            Last Name
+           <b>Last Name</b>
           </label>
           <input
             type="text"
@@ -152,12 +155,13 @@ const RegisterExpert = () => {
 
         <div class="mb-3">
           <label for="email" class="form-label">
-            Email ID
+           <b> Email ID</b>
           </label>
           <input
             type="email"
             class="form-control"
             id="email"
+            placeholder="(eg- chahat@gmail.com)"
             defaultValue={expert.email.value}
             onChange={(e) => {
               handleChange("email", e.target.value);
@@ -166,30 +170,30 @@ const RegisterExpert = () => {
               handleChange("email", e.target.value);
             }}
           />
-          <span>{expert.email.error}</span>
+          <span className="invalid">{expert.email.error}</span>
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">
-            Password
+          <label for="qualification" class="form-label">
+            <b>Qualification</b>
           </label>
           <input
-            type="password"
+            type="text"
             class="form-control"
-            id="password"
-            defaultValue={expert.password.value}
+            id="qualification"
+            placeholder="(please write under 100 characters)"
+            defaultValue={expert.qualification.value}
             onChange={(e) => {
-              handleChange("password", e.target.value);
+              handleChange("qualification", e.target.value);
             }}
             onBlur={(e) => {
-              handleChange("password", e.target.value);
+              handleChange("qualification", e.target.value);
             }}
           />
-          <span>{expert.password.error}</span>
         </div>
         
         <div class="mb-3">
           <label for="exampleInputFname" class="form-label">
-            UserName
+            <b>UserName</b>
           </label>
           <input
             type="text"
@@ -204,7 +208,26 @@ const RegisterExpert = () => {
               handleChange("uname", e.target.value);
             }}
           />
-          <span>{expert.username.error}</span>
+          <span className="invalid">{expert.username.error}</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">
+           <b> Password</b>
+          </label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            defaultValue={expert.password.value}
+            onChange={(e) => {
+              handleChange("password", e.target.value);
+            }}
+            onBlur={(e) => {
+              handleChange("password", e.target.value);
+            }}
+          />
+          <span className="invalid">{expert.password.error}</span>
         </div>
 
         <button

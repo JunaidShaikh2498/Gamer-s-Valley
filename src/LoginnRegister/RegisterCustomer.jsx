@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react'
-
+import './RegisterCSS.css';
 const RegisterCustomer = () => {
 
   const [formValid, setFormValid] = useState(false);
@@ -110,11 +110,11 @@ const RegisterCustomer = () => {
   }
 
   return (
-    <div>
-        <form className="">
+    <div className="container">
+        <form >
         <div class="mb-3">
           <label for="exampleInputFname" class="form-label">
-            First Name
+            <b>First Name</b>
           </label>
           <input
             type="text"
@@ -133,7 +133,7 @@ const RegisterCustomer = () => {
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">
-            Last Name
+            <b>Last Name</b>
           </label>
           <input
             type="text"
@@ -152,12 +152,13 @@ const RegisterCustomer = () => {
 
         <div class="mb-3">
           <label for="email" class="form-label">
-            Email ID
+            <b>Email ID</b>
           </label>
           <input
             type="email"
             class="form-control"
             id="email"
+            placeholder="(eg- chahat@gmail.com)"
             defaultValue={user.email.value}
             onChange={(e) => {
               handleChange("email", e.target.value);
@@ -168,28 +169,11 @@ const RegisterCustomer = () => {
           />
           <span>{user.email.error}</span>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">
-            Password
-          </label>
-          <input
-            type="password  "
-            class="form-control"
-            id="password"
-            defaultValue={user.password.value}
-            onChange={(e) => {
-              handleChange("password", e.target.value);
-            }}
-            onBlur={(e) => {
-              handleChange("password", e.target.value);
-            }}
-          />
-          <span>{user.password.error}</span>
-        </div>
+        
         
         <div class="mb-3">
           <label for="exampleInputFname" class="form-label">
-            UserName
+            <b>UserName</b>
           </label>
           <input
             type="text"
@@ -205,6 +189,24 @@ const RegisterCustomer = () => {
             }}
           />
           <span>{user.username.error}</span>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">
+           <b>Password</b>
+          </label>
+          <input
+            type="password  "
+            class="form-control"
+            name="password"
+            defaultValue={user.password.value}
+            onChange={(e) => {
+              handleChange("password", e.target.value);
+            }}
+            onBlur={(e) => {
+              handleChange("password", e.target.value);
+            }}
+          />
+          <span>{user.password.error}</span>
         </div>
 
         <button
