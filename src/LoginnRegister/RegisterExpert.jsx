@@ -1,8 +1,11 @@
 import React, { useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterExpert = () => {
   const [formValid, setFormValid] = useState(false);
 
+  const navigate = useNavigate()
+ const [isReg,setIsReg]=useState(false)
   const handleChange = (key, value) => {
     const ipObj = validate(key, value);
     setExpert({
@@ -77,8 +80,10 @@ const RegisterExpert = () => {
     email: { value: "", valid: false, touched: false, error: "" },
     contact: {value: "", valid: false, touched: false, error: ""},
     username: { value: "", valid: false, touched: false, error: ""},
-    experience:{ value: "", valid: false, touched: false, error: ""},
-    password: { value: "", valid: false, touched: false, error: "" }
+    qualification:{ value: "", valid: false, touched: false, error: ""},
+    password: { value: "", valid: false, touched: false, error: "" },
+    approved:{value:0,valid:true,touched:true,error:""},
+    role:{value:3,valid:true,touched:true,error:""}
   };
 
   const reducer = (state, action) => {
@@ -105,8 +110,20 @@ const RegisterExpert = () => {
         email: expert.email.value,
         username:expert.username.value,
         password: expert.password.value,
-      }),
+        approved:expert.approved.value,
+        role: expert.role.value
+      })
     };
+    fetch("http://localhost:8080/registered/saveExp",options)
+    .then((response)=>{return response.json()})
+    .then((data)=>{setIsReg(data)})
+
+    if(isReg){
+      navigate('/login')
+    }
+    else{
+      navigate("/re")
+    }
   }
 
   return (

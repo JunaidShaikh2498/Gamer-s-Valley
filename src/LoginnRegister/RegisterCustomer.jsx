@@ -1,8 +1,11 @@
 import React, { useReducer, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const RegisterCustomer = () => {
 
   const [formValid, setFormValid] = useState(false);
+
+  const navigate = useNavigate()
 
   const handleChange = (key, value) => {
     const ipObj = validate(key, value);
@@ -34,14 +37,14 @@ const RegisterCustomer = () => {
         var fnamep = /^[A-Z][a-z]*$/;
         valid = fnamep.test(value);
         if (!valid) {
-          error = "Invalid Name";
+          error = "Starts with Capital Letter";
         }
         return { error, valid };
       case "lname":
         var lnmp = /^[A-Z][a-z]*$/;
         valid = lnmp.test(value);
         if (!valid) {
-          error = "Invalid SurName";
+          error = "Starts with Capital Letter";
         }
         return { error, valid };
       case "email":
@@ -49,14 +52,45 @@ const RegisterCustomer = () => {
 
         valid = mailp.test(value);
         if (!valid) {
-          error = "Invalid email title";
+          error = "Invalid email";
         }
         return { error, valid };
       case "password":
-        var pwdp = /^\d{1,4}(?:.\d{1,2})?$/;
-        valid = pwdp.test(value);
-        if (!valid) {
-          error = "Password pattern not satisfied";
+        var digit = /[\d]{1,}/;
+        var special = /[\W_!@#$%^&]{1,}/;
+        var capital = /[A-Z]{1,}/;
+        var isCapital;
+        var isDigit;
+        var isSpecial;
+
+        isCapital = capital.test(value);
+        isDigit = digit.test(value);
+        isSpecial = special.test(value);
+
+        if ((value.length < 5) || (isCapital || isDigit || isSpecial)) {
+          // $("#strength").html("Weak").css("color","red")
+          error = "Weak password";
+          valid = false;
+        }
+        if (isCapital && isDigit) {
+          // $("#strength").html("Average").css("color","Orange")
+          error = "Average password";
+          valid = false;
+        }
+        if (isCapital && isSpecial) {
+          // $("#strength").html("Average").css("color","Orange")
+          error = "Average password";
+          valid = false;
+        }
+        if (isDigit && isSpecial) {
+          // $("#strength").html("Average").css("color","Orange")
+          error = "Average password";
+          valid = false;
+        }
+        if (isCapital && isDigit && isSpecial) {
+          // $("#strength").html("Strong").css("color","green")
+          error = "";
+          valid = true;
         }
         return { error, valid };
         case "username":
@@ -72,13 +106,16 @@ const RegisterCustomer = () => {
     }
   };
 
+  const [isReg,setIsReg]=useState(false)
   const initDetails = {
     fname: { value: "", valid: false, touched: false, error: "" },
     lname: { value: "", valid: false, touched: false, error: "" },
     email: { value: "", valid: false, touched: false, error: "" },
     username:{value: "", valid: false, touched: false, error: ""},
     password: { value: "", valid: false, touched: false, error: "" },
-    address: { value: "", valid: false, touched: false, error: "" }
+    address: { value: "", valid: false, touched: false, error: "" },
+    approved:{value:1,valid:true,touched:true,error:""},
+    role:{value:2,valid:true,touched:true,error:""}
   };
 
   const reducer = (state, action) => {
@@ -105,8 +142,20 @@ const RegisterCustomer = () => {
         email: user.email.value,
         username: user.username.value,
         password: user.password.value,
-      }),
+        approved:user.approved.value,
+        role: user.role.value
+      })
     };
+    fetch("http://localhost:8080/registered/save",options)
+    .then((response)=>{return response.json()})
+    .then((data)=>{setIsReg(data)})
+
+    if(isReg){
+      navigate('/login')
+    }
+    else{
+      navigate("/rc")
+    }
   }
 
   return (
