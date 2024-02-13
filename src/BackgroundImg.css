@@ -1,0 +1,8 @@
+.background-image {
+    background-image: url('./Photos/Dashboard.webp');
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    background: center center fixed;
+  }
