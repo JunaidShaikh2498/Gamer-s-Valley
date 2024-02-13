@@ -19,9 +19,10 @@ const RegisterExpert = () => {
       },
     });
     if (
-      expert.fname.valid &&
-      expert.lname.valid &&
+      expert.firstname.valid &&
+      expert.lastname.valid &&
       expert.email.valid &&
+      expert.username.valid &&
       expert.password.valid
     ) {
       setFormValid(true);
@@ -32,18 +33,18 @@ const RegisterExpert = () => {
     let valid = true;
     let error = "";
     switch (key) {
-      case "fname":
+      case "firstname":
         var fnamep = /^[A-Z][a-z]*$/;
         valid = fnamep.test(value);
         if (!valid) {
-          error = "Invalid Name";
+          error = "Start w/ a capital Letter";
         }
         return { error, valid };
-      case "lname":
+      case "lastname":
         var lnmp = /^[A-Z][a-z]*$/;
         valid = lnmp.test(value);
         if (!valid) {
-          error = "Invalid SurName";
+          error = "Start w/ a Capital Letter";
         }
         return { error, valid };
       case "email":
@@ -55,13 +56,44 @@ const RegisterExpert = () => {
         }
         return { error, valid };
       case "password":
-        var pwdp = /^\d{1,4}(?:.\d{1,2})?$/;
-        valid = pwdp.test(value);
-        if (!valid) {
-          error = "Password pattern not satisfied";
+        var digit = /[\d]{1,}/;
+        var special = /[\W_!@#$%^&]{1,}/;
+        var capital = /[A-Z]{1,}/;
+        var isCapital;
+        var isDigit;
+        var isSpecial;
+
+        isCapital = capital.test(value);
+        isDigit = digit.test(value);
+        isSpecial = special.test(value);
+
+        if ((value.length < 5) || (isCapital || isDigit || isSpecial)) {
+          // $("#strength").html("Weak").css("color","red")
+          error = "Weak password";
+          valid = false;
+        }
+        if (isCapital && isDigit) {
+          // $("#strength").html("Average").css("color","Orange")
+          error = "Average password";
+          valid = false;
+        }
+        if (isCapital && isSpecial) {
+          // $("#strength").html("Average").css("color","Orange")
+          error = "Average password";
+          valid = false;
+        }
+        if (isDigit && isSpecial) {
+          // $("#strength").html("Average").css("color","Orange")
+          error = "Average password";
+          valid = false;
+        }
+        if (isCapital && isDigit && isSpecial) {
+          // $("#strength").html("Strong").css("color","green")
+          error = "";
+          valid = true;
         }
         return { error, valid };
-        case "uname":
+        case "username":
           var unamep = /^[a-z0-9_]+$/
 
           valid = unamep.test(value);
@@ -75,8 +107,8 @@ const RegisterExpert = () => {
   };
 
   const initDetails = {
-    fname: { value: "", valid: false, touched: false, error: "" },
-    lname: { value: "", valid: false, touched: false, error: "" },
+    firstname: { value: "", valid: false, touched: false, error: "" },
+    lastname: { value: "", valid: false, touched: false, error: "" },
     email: { value: "", valid: false, touched: false, error: "" },
     username: { value: "", valid: false, touched: false, error: ""},
     password: { value: "", valid: false, touched: false, error: "" },
@@ -104,26 +136,38 @@ const RegisterExpert = () => {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        fname: expert.fname.value,
-        lname: expert.lname.value,
+        firstname: expert.firstname.value,
+        lastname: expert.lastname.value,
         email: expert.email.value,
         qualification: expert.qualification.value,
         username:expert.username.value,
         password: expert.password.value,
         approved:expert.approved.value,
-        role: expert.role.value
+        roleId: expert.role.value
       })
     };
+    console.log(options.body);
     fetch("http://localhost:8080/registered/saveExp",options)
     .then((response)=>{return response.json()})
-    .then((data)=>{setIsReg(data)})
+    .then((data)=>{setIsReg(data)
+      console.log(isReg,data);
+      // if(data){
+      //   navigate('/login')
+      // }
+      // else{
+      //   navigate("/re")
+      // }
+      switch(isReg){
+        case true:
+          navigate("/login")
+          break;
+        default:
+          alert("Expert not Registerd")
+          navigate("/re")
+      }
+    })
 
-    if(isReg){
-      navigate('/login')
-    }
-    else{
-      navigate("/re")
-    }
+    
   }
 
   return (
@@ -139,15 +183,15 @@ const RegisterExpert = () => {
             id="fname"
             
             aria-describedby="emailHelp"
-            defaultValue={expert.fname.value}
+            defaultValue={expert.firstname.value}
             onChange={(e) => {
-              handleChange("fname", e.target.value);
+              handleChange("firstname", e.target.value);
             }}
             onBlur={(e) => {
-              handleChange("fname", e.target.value);
+              handleChange("firstname", e.target.value);
             }}
           />
-          <span>{expert.fname.error}</span>
+          <span>{expert.firstname.error}</span>
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">
@@ -157,15 +201,15 @@ const RegisterExpert = () => {
             type="text"
             class="form-control"
             id="lname"
-            defaultValue={""}
+            defaultValue={expert.lastname.value}
             onChange={(e) => {
-              handleChange("lname", e.target.value);
+              handleChange("lastname", e.target.value);
             }}
             onBlur={(e) => {
-              handleChange("lname", e.target.value);
+              handleChange("lastname", e.target.value);
             }}
           />
-          <span>{expert.lname.error}</span>
+          <span>{expert.lastname.error}</span>
         </div>
 
         <div class="mb-3">
@@ -207,7 +251,7 @@ const RegisterExpert = () => {
         </div>
         
         <div class="mb-3">
-          <label for="exampleInputFname" class="form-label">
+          <label for="exampleInputUname" class="form-label">
             <b>UserName</b>
           </label>
           <input
@@ -216,11 +260,12 @@ const RegisterExpert = () => {
             id="uname"
             aria-describedby="emailHelp"
             defaultValue={expert.username.value}
+            required
             onChange={(e) => {
-              handleChange("uname", e.target.value);
+              handleChange("username", e.target.value);
             }}
             onBlur={(e) => {
-              handleChange("uname", e.target.value);
+              handleChange("username", e.target.value);
             }}
           />
           <span className="invalid">{expert.username.error}</span>

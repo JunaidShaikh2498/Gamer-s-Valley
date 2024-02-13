@@ -8,10 +8,10 @@ export const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handleLogOut= ()=>{
+    navigate("/login")
     dispatch(logout())
-    if(loggedStatus===false){
-      navigate("/login")
-    }
+    console.log(loggedStatus)    
+
   }
   
   return (

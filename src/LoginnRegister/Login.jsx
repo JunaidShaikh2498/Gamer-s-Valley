@@ -26,23 +26,41 @@ const Login = () => {
     }
     fetch("http://localhost:8080/login",options)
     .then((response)=>{return response.json()})
-    .then((data)=>{setRole(data)})
-      if(role===2){
-        dispatch(login())
-        if(loginState){
-          navigate("/home")
-        }
+    .then((data)=>{setRole(data)
+      console.log(data);
+      // if(role===2){
+      //   dispatch(login())
+      //    if(loginState){
+      //     console.log(loginState);
+      //     navigate("/home")
+      //    }
+           
+      //    }
+      //    if(role===3){
+      //      dispatch(login())
+      //      if(loginState){
+      //        navigate("/expdashboard")
+      //      }
+      //    }
+      //    if(role===-1){
+      //      alert("Invalid Credentials")
+      //      navigate("/login")
+      //    }
+      switch(role){
+        case 2:
+          dispatch(login())
+          navigate('/home')
+          break
+        case 3:
+          dispatch(login())
+          navigate('/expdashboard')
+          break
+        default:
+          alert("Invalid Credentials")
+          navigate("/login")
       }
-      if(role===3){
-        dispatch(login())
-        if(loginState){
-          navigate("/expdashboard")
-        }
-      }
-      if(role===-1){
-        alert("Invalid Credentials")
-        navigate("/login")
-      }
+    })
+   
   };
 
   return (
@@ -59,6 +77,7 @@ const Login = () => {
               id="inputUname"
               placeholder="(Enter your Username)"
               value={loginData.username}
+              required
               onChange={(e) => {
                 setLoginData((prevState) => ({
                   ...prevState,
@@ -78,6 +97,7 @@ const Login = () => {
               id="inputPassword3"
               placeholder="(Enter your password)"
               value={loginData.password}
+              required
               onChange={(e) => {
                 setLoginData((prevState) => ({
                   ...prevState,

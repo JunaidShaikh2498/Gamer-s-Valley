@@ -6,10 +6,10 @@ export const loggedSlice = createSlice({
         loggedIn: false,
     },
     reducers:{
-        login:(state)=>{
+        login:()=>{
             return {loggedIn:true}
         },
-        logout:(state)=>{return{loggedIn:false}}
+        logout:()=>{return{loggedIn:false}}
     }
 })
 export const {login} = loggedSlice.actions;

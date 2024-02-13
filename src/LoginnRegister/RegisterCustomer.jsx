@@ -20,8 +20,8 @@ const RegisterCustomer = () => {
       },
     });
     if (
-      user.fname.valid &&
-      user.lname.valid &&
+      user.firstname.valid &&
+      user.lastname.valid &&
       user.email.valid &&
       user.password.valid
     ) {
@@ -33,14 +33,14 @@ const RegisterCustomer = () => {
     let valid = true;
     let error = "";
     switch (key) {
-      case "fname":
+      case "firstname":
         var fnamep = /^[A-Z][a-z]*$/;
         valid = fnamep.test(value);
         if (!valid) {
-          error = "Invalid Name";
+          error = "Starts with Capital letter";
         }
         return { error, valid };
-      case "lname":
+      case "lastname":
         var lnmp = /^[A-Z][a-z]*$/;
         valid = lnmp.test(value);
         if (!valid) {
@@ -105,18 +105,17 @@ const RegisterCustomer = () => {
         return {};
     }
   };
-
   const [isReg,setIsReg]=useState(false)
   const initDetails = {
-    fname: { value: "", valid: false, touched: false, error: "" },
-    lname: { value: "", valid: false, touched: false, error: "" },
+    firstname: { value: "", valid: false, touched: false, error: "" },
+    lastname: { value: "", valid: false, touched: false, error: "" },
     email: { value: "", valid: false, touched: false, error: "" },
     contact:{ value: "", valid: false, touched: false, error: "" },
     address:{ value: "", valid: false, touched: false, error: "" },
     username:{value: "", valid: false, touched: false, error: ""},
     password: { value: "", valid: false, touched: false, error: "" },
     approved:{value:1,valid:true,touched:true,error:""},
-    role:{value:2,valid:true,touched:true,error:""}
+    roleId:{value:2,valid:true,touched:true,error:""}
   };
 
   const reducer = (state, action) => {
@@ -138,27 +137,29 @@ const RegisterCustomer = () => {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        fname: user.fname.value,
-        lname: user.lname.value,
+        firstname: user.firstname.value,
+        lastname: user.lastname.value,
         email: user.email.value,
         contact:user.contact.value,
         address:user.address.value,
         username: user.username.value,
         password: user.password.value,
         approved:user.approved.value,
-        role: user.role.value
+        roleId: user.roleId.value
       })
     };
     fetch("http://localhost:8080/registered/save",options)
     .then((response)=>{return response.json()})
-    .then((data)=>{setIsReg(data)})
+    .then((data)=>{setIsReg(data)
+      if(data){
+        navigate('/login')
+      }
+      else{
+        navigate("/rc")
+      }
+    })
 
-    if(isReg){
-      navigate('/login')
-    }
-    else{
-      navigate("/rc")
-    }
+    
   }
 
   return (
@@ -173,15 +174,15 @@ const RegisterCustomer = () => {
             class="form-control"
             id="fname"
             aria-describedby="emailHelp"
-            defaultValue={user.fname.value}
+            defaultValue={user.firstname.value}
             onChange={(e) => {
-              handleChange("fname", e.target.value);
+              handleChange("firstname", e.target.value);
             }}
             onBlur={(e) => {
-              handleChange("fname", e.target.value);
+              handleChange("firstname", e.target.value);
             }}
           />
-          <span>{user.fname.error}</span>
+          <span>{user.firstname.error}</span>
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">
@@ -191,15 +192,15 @@ const RegisterCustomer = () => {
             type="text"
             class="form-control"
             id="lname"
-            defaultValue={""}
+            defaultValue={user.lastname.value}
             onChange={(e) => {
-              handleChange("lname", e.target.value);
+              handleChange("lastname", e.target.value);
             }}
             onBlur={(e) => {
-              handleChange("lname", e.target.value);
+              handleChange("lastname", e.target.value);
             }}
           />
-          <span>{user.lname.error}</span>
+          <span>{user.lastname.error}</span>
         </div>
 
         <div class="mb-3">
@@ -285,7 +286,7 @@ const RegisterCustomer = () => {
            <b>Password</b>
           </label>
           <input
-            type="password  "
+            type="password"
             class="form-control"
             name="password"
             defaultValue={user.password.value}

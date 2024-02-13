@@ -19,7 +19,6 @@ function App() {
     <Navbar/>
     
     <div className="App">
-        
         <Routes>
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
