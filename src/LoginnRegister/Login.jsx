@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../Slices/loginSlice";
+import { login, loginCustomer, loginExpert } from "../Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
 import './RegisterCSS.css'
 
@@ -49,10 +49,12 @@ const Login = () => {
       switch(role){
         case 2:
           dispatch(login())
+          dispatch(loginCustomer())
           navigate('/home')
           break
         case 3:
           dispatch(login())
+          dispatch(loginExpert())
           navigate('/expdashboard')
           break
         default:

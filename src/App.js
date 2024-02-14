@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import RegisterExpert from './LoginnRegister/RegisterExpert';
 import Login from './LoginnRegister/Login';
 import CustomerDash from './LoginnRegister/CustomerDash';
@@ -9,15 +9,16 @@ import CategoryList from './products/CategoryList';
 import { Navbar } from './Navbar/Navbar';
 import { About } from './Navbar/About';
 import { Register } from './Navbar/Register';
-import pic from './Photos/Dashboard.webp';
 import './BackgroundImg.css';
 
 import { Browse } from './products/Browse';
+import ExpertDash from './LoginnRegister/ExpertDash';
 function App() {
   const loggedStatus = useSelector(((state) => state.logged.loggedIn))
+  const role = useSelector(state=>state.logged.role)
   return (
     <>
-    <Navbar/>
+    {(role===2)?(<Navbar />):(<div></div>)}
     <div className="App" style={{background:
     "url(./Photos/Dashboard.webp) no-repeat center center fixed"}}>
         <Routes>
@@ -25,6 +26,7 @@ function App() {
           <Route path='/rc' element={<RegisterCustomer/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/dashboard' element={<CustomerDash/>}/>
+          <Route path='/expdashboard' element={<ExpertDash/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<CategoryList/>}/>
