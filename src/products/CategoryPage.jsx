@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 
 import './Prod.css';
 import pro from '../Photos/processorCat.jpg';
@@ -13,6 +13,8 @@ import keyb from '../Photos/keyboardCat.avif';
 import mouse from '../Photos/mouseCat.avif';
 import heads from '../Photos/headsetsCat.avif';
 
+
+
 const products = [
   { id: 1, name: 'Processors', price: '$10',image:pro,description:'Nice phone!!'},
   { id: 2, name: 'Motherboards', price: '$20',image:mob,description:'Nice phone!!' },
@@ -23,16 +25,17 @@ const products = [
   { id: 7, name: 'CPU cases', price: '$60',image:cases,description:'Nice phone!!' },
   { id: 8, name: 'Cooling Fans', price: '$60',image:coolf,description:'Nice phone!!' },
   { id: 9, name: 'Keyboards', price: '$60',image:keyb,description:'Nice phone!!' },
-  { id: 7, name: 'Mouses', price: '$60',image:mouse,description:'Nice phone!!' },
-  { id: 8, name: 'Headsets', price: '$60',image:heads,description:'Nice phone!!' }
-
+  { id: 10, name: 'Mouses', price: '$60',image:mouse,description:'Nice phone!!' },
+  { id: 11, name: 'Headsets', price: '$60',image:heads,description:'Nice phone!!' }
 ];
 
 const cartHandler = (e) => {
   window.location.href = '/browse_cat';
 };
 
-const ProductCard = ({ product }) => (
+
+const ProductCard = ({ category }) => (
+  
   <div className="product-card">
     {/*<div className="product-image"> <img src={product.image} style={{height:'200px'}}/> </div>
     <div className="product-name">{product.name}</div>
@@ -40,15 +43,15 @@ const ProductCard = ({ product }) => (
 <span className="product-description">{product.description}</span>*/}
     <div className="card">
   <div className="card-img" >
-    <img src={product.image} alt='no image' className='card-img'/>
+    <img src={category.images} alt='no image' className='card-img'/>
     </div>
 
   <div className="card-info">
-    <p className="text-title">{product.name} </p>
-    <p className="text-body">{product.description}</p>
+    <p className="text-title">{category.Category_Name} </p>
+    <p className="text-body">{category.Category_Description}</p>
   </div>
   <div className="card-footer">
-    <span className="text-title">{product.price}</span>
+    {/*<span className="text-title">{category.price}</span>*/}
     <div className="card-button">
       {/*<svg className="svg-icon" viewBox="0 0 20 20" onClick={cartHandler}>
         <path d="M17.72,5.011H8.026c-0.271,0-0.49,0.219-0.49,0.489c0,0.271,0.219,0.489,0.49,0.489h8.962l-1.979,4.773H6.763L4.935,5.343C4.926,5.316,4.897,5.309,4.884,5.286c-0.011-0.024,0-0.051-0.017-0.074C4.833,5.166,4.025,4.081,2.33,3.908C2.068,3.883,1.822,4.075,1.795,4.344C1.767,4.612,1.962,4.853,2.231,4.88c1.143,0.118,1.703,0.738,1.808,0.866l1.91,5.661c0.066,0.199,0.252,0.333,0.463,0.333h8.924c0.116,0,0.22-0.053,0.308-0.128c0.027-0.023,0.042-0.048,0.063-0.076c0.026-0.034,0.063-0.058,0.08-0.099l2.384-5.75c0.062-0.151,0.046-0.323-0.045-0.458C18.036,5.092,17.883,5.011,17.72,5.011z" />
@@ -65,8 +68,14 @@ const ProductCard = ({ product }) => (
 );
 
 const CategoryList = () => {
-  const productCards = products.map((product) => (
-    <ProductCard key={product.id} product={product} />
+  const[cats,setCats]=useState([])
+    useEffect(()=>{
+        fetch("http://localhost:8080/home")
+        .then(resp=>resp.json())
+        .then(data=>setCats(data))
+    },[]);
+  const productCards = cats.map((product) => (
+    <ProductCard key={product.Category_Id} product={product} />
   ));
 
   const rows = productCards.reduce((result, row, index) => {
@@ -90,6 +99,7 @@ const CategoryList = () => {
 
 const CategoryPage = () => {
   return (
+    
     <div className="product-page">
       <h1>Categories</h1>
       <CategoryList />

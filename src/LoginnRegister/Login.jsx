@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Slices/loginSlice";
-import { useNavigate } from "react-router-dom";
-import CustomerDash from "./CustomerDash";
+import { useNavigate } from "react-router-dom"; 
 import './RegisterCSS.css'
+import CategoryPage from "../products/CategoryPage";
 
 const Login = () => {
   const users = useSelector((state) => state.logged.users);
@@ -24,7 +24,7 @@ const Login = () => {
     );
     if (user) {
       dispatch(login(user));
-      navigate("/dashboard");
+      navigate("/home");
     } else navigate("/login");
   };
 
@@ -69,7 +69,7 @@ const Login = () => {
         <div>
           <input type="submit" value="Login" className="btn btn-success" onClick={(e)=>{handleLogin(e)}} />
         </div>
-      </form>:<CustomerDash/>}
+      </form>:<CategoryPage/>}
       
     </div>
   );
