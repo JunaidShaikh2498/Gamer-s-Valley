@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../Slices/loginSlice";
+import { login, loginCustomer, loginExpert } from "../Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
 import './RegisterCSS.css'
 
@@ -37,11 +37,18 @@ const Login = () => {
     .then((data)=>{
       console.log(data);
       setApproved(data.approved)
-      setRegId(data.registration_id)
+      setRegId(data.registrationId)
       setUsenname(data.username)
-      setRoleId(data.role_id)
+      setRoleId(data.roleId)
       switch(data.roleId){
+        case 1:
+          dispatch(login())
+          navigate('/admin')
+          break
+
         case 2:
+          dispatch(login())
+          // dispatch(loginCustomer())
           navigate('/home')
           dispatch(login())
           break
@@ -49,11 +56,13 @@ const Login = () => {
           if(data.approved===1)
           {navigate('/expdashboard')
           dispatch(login())
-          }
-          else{
-              setLoginError("Wait for admin approval")
-          }
-          break
+          // dispatch(loginExpert())
+          navigate('/expdashboard')
+        }
+        else{
+          setLoginError("Wait for admin approval")
+        }
+        break
         default:
           setLoginError("Invalid Credentials")
           navigate("/login")
