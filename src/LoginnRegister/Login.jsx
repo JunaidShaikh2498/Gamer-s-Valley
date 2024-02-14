@@ -48,12 +48,12 @@ const Login = () => {
       //    }
       switch(role){
         case 2:
-          dispatch(login())
           navigate('/home')
+          dispatch(login())
           break
         case 3:
-          dispatch(login())
           navigate('/expdashboard')
+          dispatch(login())
           break
         default:
           alert("Invalid Credentials")
