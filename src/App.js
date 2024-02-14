@@ -18,8 +18,7 @@ function App() {
   return (
     <>
     <Navbar/>
-    <div className="App" style={{background:
-    "url(./Photos/Dashboard.webp) no-repeat center center fixed"}}>
+    <div className="App">
         <Routes>
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
@@ -30,7 +29,6 @@ function App() {
           <Route path='/home' element={<CategoryList/>}/>
           <Route path='/browse_cat' element={<Browse/>}/>
         </Routes>
-
     </div>
     </>
   );

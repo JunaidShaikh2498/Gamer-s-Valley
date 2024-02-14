@@ -15,7 +15,8 @@ export const Navbar = () => {
   }
   
   return (
-    <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div>
+    <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark" >
       <div className="container-fluid bg-" style={{justifyContent:'space-between'}}>
         <a className="navbar-brand" href="/">
           Gamer's Valley
@@ -31,7 +32,7 @@ export const Navbar = () => {
         >
           <span className="navbar-toggler-icon" />
   </button>*/}
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent" >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="/home">
@@ -120,6 +121,6 @@ export const Navbar = () => {
         </div>
       </div>
     </nav>
-
+    </div>
   )
 }

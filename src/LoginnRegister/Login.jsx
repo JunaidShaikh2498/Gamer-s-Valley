@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +8,20 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const loginState = useSelector((state) => state.logged.loggedIn);
+  const[loginError,setLoginError]=useState("")
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
   });
-  const [role,setRole]=useState(0)
+
+
+
+  const [reg_id,setRegId]=useState()
+  const [approved,setApproved]=useState()
+  const [userame,setUsenname]=useState("")
+  const [role_id,setRoleId]=useState()
+
   const handleLogin = (e) => {
     e.preventDefault();
     const options={
@@ -26,37 +34,28 @@ const Login = () => {
     }
     fetch("http://localhost:8080/login",options)
     .then((response)=>{return response.json()})
-    .then((data)=>{setRole(data)
+    .then((data)=>{
       console.log(data);
-      // if(role===2){
-      //   dispatch(login())
-      //    if(loginState){
-      //     console.log(loginState);
-      //     navigate("/home")
-      //    }
-           
-      //    }
-      //    if(role===3){
-      //      dispatch(login())
-      //      if(loginState){
-      //        navigate("/expdashboard")
-      //      }
-      //    }
-      //    if(role===-1){
-      //      alert("Invalid Credentials")
-      //      navigate("/login")
-      //    }
-      switch(role){
+      setApproved(data.approved)
+      setRegId(data.registration_id)
+      setUsenname(data.username)
+      setRoleId(data.role_id)
+      switch(data.roleId){
         case 2:
           navigate('/home')
           dispatch(login())
           break
         case 3:
-          navigate('/expdashboard')
+          if(data.approved===1)
+          {navigate('/expdashboard')
           dispatch(login())
+          }
+          else{
+              setLoginError("Wait for admin approval")
+          }
           break
         default:
-          alert("Invalid Credentials")
+          setLoginError("Invalid Credentials")
           navigate("/login")
       }
     })
@@ -118,6 +117,7 @@ const Login = () => {
           />
         </div>
       </form>
+      <div>{loginError}</div>
     </div>
   );
 };
