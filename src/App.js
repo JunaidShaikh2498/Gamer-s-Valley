@@ -13,6 +13,7 @@ import './BackgroundImg.css';
 
 import { Browse } from './products/Browse';
 import ExpertDash from './LoginnRegister/ExpertDash';
+import EditProfileExpert from './InsideExpert/EditProfileExpert';
 function App() {
   const loggedStatus = useSelector(((state) => state.logged.loggedIn))
   const role = useSelector(state=>state.logged.role)
@@ -29,6 +30,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/dashboard' element={<CustomerDash/>}/>
           <Route path='/expdashboard' element={<ExpertDash/>}/>
+          <Route path='/expdashboard/editProfile' element={<EditProfileExpert/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<CategoryList/>}/>

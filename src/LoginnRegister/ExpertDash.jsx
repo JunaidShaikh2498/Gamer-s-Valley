@@ -25,16 +25,16 @@ const ExpertDash = () => {
     navigate('/login')
   }
   const editProfile = ()=>{
-    navigate("/expDash/editProfile")
+    navigate("/expdashboard/editProfile")
   }
   const answerFAQs = ()=>{
-    navigate("/expDash/answerFAQs")
+    navigate("/expdashboard/answerFAQs")
   }
   const viewCats = ()=>{
-    navigate("/expDash/viewCats")
+    navigate("/expdashboard/viewCats")
   }
   const visitForum = ()=>{
-    navigate("/expDash/visitForum")
+    navigate("/expdashboard/visitForum")
   }
   const [role,setRole]=useState(3)
   return (
