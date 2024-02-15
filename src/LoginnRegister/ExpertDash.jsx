@@ -31,7 +31,7 @@ const ExpertDash = () => {
     navigate("/expDash/answerFAQs")
   }
   const viewCats = ()=>{
-    navigate("/expDash/viewCats")
+    navigate("/home")
   }
   const visitForum = ()=>{
     navigate("/expDash/visitForum")

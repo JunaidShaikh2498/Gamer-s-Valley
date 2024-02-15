@@ -105,16 +105,16 @@ export const Navbar = () => {
           </ul>
           {!loggedStatus?
           <>
-          <a href="/login">
-                <button className="btn btn-outline-success" type="button">
+          
+                <button className="btn btn-outline-success" onClick={()=>{navigate("/login")}} type="button">
                 Login
                 </button>
-            </a>
-            <a href="/register">
-                <button className="btn btn-outline-danger" type="button">
+            
+            
+                <button className="btn btn-outline-danger" onClick={()=>{navigate("/register")}}type="button">
                     Register
                 </button>
-            </a>
+            
             </>
             :<button className="btn btn-outline-danger" onClick={()=>{handleLogOut()}}>Logout</button>}
             

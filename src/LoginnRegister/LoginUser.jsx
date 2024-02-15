@@ -5,78 +5,77 @@ import { login, loginCustomer, loginExpert } from "../Slices/loginSlice";
 import { useNavigate } from "react-router-dom";
 
 import './RegisterCSS.css'
-//import CategoryPage from "../products/CategoryPage";
-
-const Login = () => {
-  const dispatch = useDispatch();
-
-  //const loginState = useSelector((state) => state.logged.loggedIn);
-  const[loginError,setLoginError]=useState("")
-  const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({
-    username: "",
-    password: "",
-  });
 
 
+const LoginUser = () => {
 
-  const [reg_id,setRegId]=useState()
-  const [approved,setApproved]=useState()
-  const [userame,setUsenname]=useState("")
-  const [role_id,setRoleId]=useState()
+    const dispatch = useDispatch();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    const options={
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body:JSON.stringify({
-        username:loginData.username,
-        password:loginData.password
+    //const loginState = useSelector((state) => state.logged.loggedIn);
+    const[loginError,setLoginError]=useState("")
+    const navigate = useNavigate();
+    const [loginData, setLoginData] = useState({
+      username: "",
+      password: "",
+    });
+  
+  
+  
+    const [reg_id,setRegId]=useState()
+    const [approved,setApproved]=useState()
+    const [userame,setUsenname]=useState("")
+    const [role_id,setRoleId]=useState()
+  
+    const handleLogin = (e) => {
+      e.preventDefault();
+  
+      const options={
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body:JSON.stringify({
+          username:loginData.username,
+          password:loginData.password
+        })
+      }
+      fetch("http://localhost:8080/login",options)
+      .then((response)=>{return response.json()})
+      .then((data)=>{
+        console.log(data);
+        setApproved(data.approved)
+        setRegId(data.registrationId)
+        setUsenname(data.username)
+        setRoleId(data.roleId)
+        switch(data.roleId){
+          case 1:
+            dispatch(login())
+            navigate('/admin')
+            break
+  
+          case 2:
+            dispatch(login())
+            // dispatch(loginCustomer())
+            navigate('/home')
+            dispatch(login())
+            break
+          case 3:
+            if(data.approved===1)
+            {navigate('/expdashboard')
+            dispatch(login())
+            // dispatch(loginExpert())
+            navigate('/expdashboard')
+          }
+          else{
+            setLoginError("Wait for admin approval")
+          }
+          break
+          default:
+            setLoginError("Invalid Credentials")
+            navigate("/login")
+        }
       })
     }
-    fetch("http://localhost:8080/login",options)
-    .then((response)=>{return response.json()})
-    .then((data)=>{
-      console.log(data);
-      setApproved(data.approved)
-      setRegId(data.registrationId)
-      setUsenname(data.username)
-      setRoleId(data.roleId)
-      switch(data.roleId){
-        case 1:
-          dispatch(login())
-          navigate('/admin')
-          break
-
-        case 2:
-          dispatch(login())
-          // dispatch(loginCustomer())
-          navigate('/home')
-          dispatch(login())
-          break
-        case 3:
-          if(data.approved===1)
-          {navigate('/expdashboard')
-          dispatch(login())
-          // dispatch(loginExpert())
-          navigate('/expdashboard')
-        }
-        else{
-          setLoginError("Wait for admin approval")
-        }
-        break
-        default:
-          setLoginError("Invalid Credentials")
-          navigate("/login")
-      }
-    })
-    
-  }
-
   return (
-    <div className="form-container">
+        <div className="form-container">
       <form className="fonm-control">
         <div class="form-group row">
           <label for="inputEmail3" class="col-sm-2 col-form-label">
@@ -132,7 +131,9 @@ const Login = () => {
       </form>
       <div>{loginError}</div>
     </div>
-  );
-};
+    
+  )
+}
 
-export default Login;
+
+export default LoginUser
