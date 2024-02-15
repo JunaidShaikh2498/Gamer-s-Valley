@@ -18,9 +18,13 @@ import { ViewForum } from './Admin/ViewForum';
 import { ViewProd } from './Admin/ViewProd';
 import { useSelector } from 'react-redux';
 import ExpertDash from './LoginnRegister/ExpertDash';
+<<<<<<< HEAD
 
 
 
+=======
+import EditProfileExpert from './InsideExpert/EditProfileExpert';
+>>>>>>> df2739ff879cb686608788eecc8dad44ffda0e3c
 function App() {
   const loggedStatus = useSelector(((state) => state.logged.loggedIn))
   const role = useSelector(state=>state.logged.role)
@@ -32,6 +36,12 @@ function App() {
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
           <Route path='/login' element={<Login/>}/>
+<<<<<<< HEAD
+=======
+          <Route path='/dashboard' element={<CustomerDash/>}/>
+          <Route path='/expdashboard' element={<ExpertDash/>}/>
+          <Route path='/expdashboard/editProfile' element={<EditProfileExpert/>}/>
+>>>>>>> df2739ff879cb686608788eecc8dad44ffda0e3c
           <Route path='/about' element={<About/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<CategoryPage/>}/>

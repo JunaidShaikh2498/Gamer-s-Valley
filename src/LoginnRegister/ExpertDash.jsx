@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../Slices/loginSlice'
-import { Navbar } from '../Navbar/Navbar'
+//import { Navbar } from '../Navbar/Navbar'
 import '../Navbar/Card.css';
 
 const Card = ({ title, text, buttonText, onClick }) => {
@@ -25,18 +25,18 @@ const ExpertDash = () => {
     navigate('/login')
   }
   const editProfile = ()=>{
-    navigate("/expDash/editProfile")
+    navigate("/expdashboard/editProfile")
   }
   const answerFAQs = ()=>{
-    navigate("/expDash/answerFAQs")
+    navigate("/expdashboard/answerFAQs")
   }
   const viewCats = ()=>{
     navigate("/home")
-  }
+
   const visitForum = ()=>{
-    navigate("/expDash/visitForum")
+    navigate("/expdashboard/visitForum")
   }
-  const [role,setRole]=useState(3)
+  
   return (
     <>
     <div className='hello'>
@@ -71,5 +71,5 @@ const ExpertDash = () => {
     
   )
 }
-
+}
 export default ExpertDash
