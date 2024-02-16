@@ -168,7 +168,7 @@ const EditProfileCustomer = () => {
   return (
     <div>
         <h2>Edit Customer Profile</h2>
-      <form onSubmit={updateCustomer} className="edit-profile-form">
+      <form className="edit-profile-form">
         <label>
           First Name:
           <input type="text" name="firstName" value={customer.firstname.value} onChange={handleChange} />
