@@ -17,6 +17,7 @@ import { ViewCat } from './Admin/ViewCat';
 import { ViewFAQ } from './Admin/ViewFAQ';
 import { ViewForum } from './Admin/ViewForum';
 import { ViewProd } from './Admin/ViewProd';
+import { FaqList } from './FAQs/FaqList';
 
 
 
@@ -26,7 +27,7 @@ function App() {
     <Navbar/>
     <Provider store={store}>
     <div className="App">
-      <Link to='/admin'>Admin</Link>
+      <Link to='/faq_list'>FaqList</Link>
         <Routes>
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
@@ -41,7 +42,7 @@ function App() {
           <Route path='/view_faq' element={<ViewFAQ/>}/>
           <Route path='/view_forum' element={<ViewForum/>}/>
           <Route path='/view_prod' element={<ViewProd/>}/>
-          
+          <Route path='/faq_list' element={<FaqList/>}/>          
 
 
         </Routes>
