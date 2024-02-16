@@ -55,10 +55,12 @@ export const ViewCat = () => {
                   </svg>
                 </div>
               </div>
-            </div>
+              </div>
           </div>
-        );
-      })}
-    </div>
   );
-};
+})}
+</div>
+      )
+}
+
+export default ViewCat
