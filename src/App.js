@@ -19,11 +19,13 @@ import { ViewProd } from './Admin/ViewProd';
 import { useSelector } from 'react-redux';
 import ExpertDash from './LoginnRegister/ExpertDash';
 import EditProfileExpert from './InsideExpert/EditProfileExpert';
+import AddProducts from './Admin/AddProducts';
 function App() {
   const loggedStatus = useSelector(((state) => state.logged.loggedIn))
   const role = useSelector(state=>state.logged.role)
   return (
     <>
+    
     <Navbar/>
     <div className="App">
         <Routes>
@@ -45,6 +47,7 @@ function App() {
           <Route path='/view_faq' element={<ViewFAQ/>}/>
           <Route path='/view_forum' element={<ViewForum/>}/>
           <Route path='/view_prod' element={<ViewProd/>}/>
+          <Route path ='/addproduct' element={<AddProducts/>}/>
         </Routes>
     </div>
     </>

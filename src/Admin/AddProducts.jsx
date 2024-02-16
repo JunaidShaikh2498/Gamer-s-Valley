@@ -6,6 +6,7 @@ const AddProducts = () => {
 
     const {state} = useLocation()
     const{cat}=state||{}
+    console.log(cat);
     const [product,setProduct]= useState({
         productName : "",
         productDescription : "",
@@ -23,7 +24,7 @@ const AddProducts = () => {
                 productPrice : product.productPrice
             })
         }
-        fetch(`http://localhost:8080/add-product/${cat.categoryId}`)
+        fetch(`http://localhost:8080/addProduct/${cat.categoryId}`,options)
         .then((res)=>{
             if(!res.ok){
                 throw new Error("Something went wrong")
@@ -48,21 +49,21 @@ const AddProducts = () => {
           <label for="pname">Product Name</label>
           <input type="text" id="pname" name="productName" required 
           onChange={(e)=>{
-            setProducts((previousState)=>({...previousState,productName:e.target.value}))
+            setProduct((previousState)=>({...previousState,productName:e.target.value}))
           }}/>
         </div>
         <div class="form-group">
           <label for="pdesc">Product Description</label>
           <textarea name="productDescription" id="pdesc" rows="10" cols="50" required
           onChange={(e)=>{
-            setProducts((previousState)=>({...previousState,productDescription:e.target.value}))
+            setProduct((previousState)=>({...previousState,productDescription:e.target.value}))
           }}>          </textarea>
         </div>
         <div class="form-group">
           <label for="price">Product Price</label>
           <input type="number" id="price" name="productPrice" required
           onChange={(e)=>{
-            setProducts((previousState)=>({...previousState,productPrice:e.target.value}))
+            setProduct((previousState)=>({...previousState,productPrice:e.target.value}))
           }}/>
         </div>
         <button class="form-submit-btn" onClick={(e)=>{addProd(e)}}>Add Product</button>
