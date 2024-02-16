@@ -16,7 +16,7 @@ const RegisterExpert = () => {
         valid: ipObj.valid,
         touched: true,
         error: ipObj.error,
-      },
+      }
     });
     if (
       expert.firstname.valid &&

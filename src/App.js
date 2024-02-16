@@ -1,4 +1,4 @@
-import {  Route, Routes } from 'react-router-dom';
+import {  Route, Routes} from 'react-router-dom';
 import RegisterExpert from './LoginnRegister/RegisterExpert';
 import Login from './LoginnRegister/Login';
 
@@ -30,7 +30,8 @@ function App() {
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/custdashboard' element={<CategoryPage/>}/>
+          {/* <Route path='/custdashboard' element={<CustomerDash/>}/>
+          <Route path='/custdashboard/editProfile' element={<EditProfileCustomer />} /> */}
           <Route path='/expdashboard' element={<ExpertDash/>}/>
           <Route path='/expdashboard/editProfile' element={<EditProfileExpert/>}/>
           <Route path='/about' element={<About/>}/>

@@ -32,7 +32,7 @@ const EditProfileExpert = () => {
   };
     const backToExpertDash = ()=>{
       navigate("/expdashboard");
-    }
+    };
     
     const updateExpert = (e) => {
     e.preventDefault();
