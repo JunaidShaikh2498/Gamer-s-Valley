@@ -7,15 +7,14 @@ const CustomerDash = () => {
   const dispatch = useDispatch()
   
   const navigate = useNavigate()
-  const handleLogout = ()=>{
-    
-    dispatch(logout())
-    navigate('/login')
-  }
+  const goCat = ()=>{
+    navigate('/home')
+  } 
   return (
     <div>
         <h1>Welcome to Gamer's Valley</h1>
-        <button className='btn btn-danger' onClick={()=>handleLogout()}>Log Out</button>
+        <button className='btn btn-outline-primary' onClick={()=>goCat()}>Go to Categories</button>
+        
     </div>
   )
 }
