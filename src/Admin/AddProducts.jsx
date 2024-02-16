@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import './AddFromAdmin.css'
+import { useLocation } from 'react-router-dom'
 
 const AddProducts = () => {
 
+    const {state} = useLocation()
+    const{cat}=state||{}
     const [product,setProduct]= useState({
         productName : "",
         productDescription : "",
@@ -20,7 +23,7 @@ const AddProducts = () => {
                 productPrice : product.productPrice
             })
         }
-        fetch("http://localhost:8080/add-product/:")
+        fetch(`http://localhost:8080/add-product/${cat.categoryId}`)
         .then((res)=>{
             if(!res.ok){
                 throw new Error("Something went wrong")
