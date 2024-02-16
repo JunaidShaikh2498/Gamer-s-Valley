@@ -1,8 +1,7 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import RegisterExpert from './LoginnRegister/RegisterExpert';
 import Login from './LoginnRegister/Login';
-import { Provider } from 'react-redux';
-import store from './store';
+import CustomerDash from './LoginnRegister/CustomerDash';
 import RegisterCustomer from './LoginnRegister/RegisterCustomer';
 
 import { Navbar } from './Navbar/Navbar';
@@ -21,34 +20,30 @@ import { FaqList } from './FAQs/FaqList';
 
 
 
+import ExpertDash from './LoginnRegister/ExpertDash';
+import EditProfileExpert from './InsideExpert/EditProfileExpert';
+import { useSelector } from 'react-redux';
 function App() {
+  const loggedStatus = useSelector(((state) => state.logged.loggedIn))
+  const role = useSelector(state=>state.logged.role)
   return (
     <>
     <Navbar/>
-    <Provider store={store}>
-    <div className="App">
-      <Link to='/faq_list'>FaqList</Link>
+    <div className="App" style={{background:
+    "url(./Photos/Dashboard.webp) no-repeat center center fixed"}}>
         <Routes>
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
+          <Route path='/admin' element={<About/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/dashboard' element={<CustomerDash/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<CategoryPage/>}/>
           <Route path='/browse_cat' element={<Browse/>}/>
-          <Route path='/admin' element={<AdminHome/>}/>
-          <Route path='/expert_list' element={<ViewExpert/>}/>
-          <Route path='/view_cat' element={<ViewCat/>}/>
-          <Route path='/view_faq' element={<ViewFAQ/>}/>
-          <Route path='/view_forum' element={<ViewForum/>}/>
-          <Route path='/view_prod' element={<ViewProd/>}/>
-          <Route path='/faq_list' element={<FaqList/>}/>          
-
 
         </Routes>
-
     </div>
-    </Provider>
     </>
   );
 }
