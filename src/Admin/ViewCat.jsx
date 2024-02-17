@@ -23,13 +23,11 @@ export const ViewCat = () => {
     navigate("/view_prod", { state: { cat } });
   };
 
-  
-
   //const {state} = useLocation
   //const{cat}=state||{}
 
   return (
-    <div>
+    <div style={{display:"flex",flexWrap:"wrap", justifyContent:"space-evenly"}}>
       {categories.map((cat) => {
         return (
           <div className="product-card">
@@ -55,12 +53,12 @@ export const ViewCat = () => {
                   </svg>
                 </div>
               </div>
-              </div>
+            </div>
           </div>
+        );
+      })}
+    </div>
   );
-})}
-</div>
-      )
-}
+};
 
-export default ViewCat
+export default ViewCat;

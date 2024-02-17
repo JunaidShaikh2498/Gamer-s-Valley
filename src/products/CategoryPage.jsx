@@ -12,6 +12,7 @@ import coolf from "../Photos/coolingfanCat.jpg";
 import keyb from "../Photos/keyboardCat.avif";
 import mouse from "../Photos/mouseCat.avif";
 import heads from "../Photos/headsetsCat.avif";
+import { useNavigate } from "react-router-dom";
 
 const categoryImages = [
   { image: pro },
@@ -27,11 +28,14 @@ const categoryImages = [
   { image: heads },
 ];
 
-const cartHandler = (e) => {
-  window.location.href = "/browse_cat";
-};
+
 
 const ProductCard = ({ categories }) => {
+  const navigate = useNavigate()
+  
+const cartHandler = (categories) => {
+  navigate("/browse_cat",{state:{categories}});
+ };
   console.log(categories);
   return (
     <div className="product-card">
@@ -54,7 +58,7 @@ const ProductCard = ({ categories }) => {
         </div>
         <div className="card-footer">
           <div className="card-button">
-            <svg className="svg-icon" viewBox="0 0 20 20" onClick={cartHandler}>
+            <svg className="svg-icon" viewBox="0 0 20 20" onClick={()=>cartHandler(categories)}>
               <path
                 fill="currentColor"
                 d="M6.554 9.639a.5.5 0 0 0 .707.707l2.667-2.677a.25.25 0 0 0 0-.354L7.261 4.639a.5.5 0 0 0-.707.707L8.2 7H1.5a.5.5 0 0 0 0 1h6.7ZM12 1H5.5a.5.5 0 0 0 0 1h6a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H5.25a.5.5 0 0 0 0 1H12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1"

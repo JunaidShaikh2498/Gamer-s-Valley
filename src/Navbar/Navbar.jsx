@@ -4,14 +4,15 @@ import { logout } from '../Slices/loginSlice'
 import { useNavigate } from 'react-router-dom'
 
 export const Navbar = () => {
-  const loggedStatus = useSelector(state=>state.logged.loggedIn)
+  
+  const loggedStatus = useSelector(state =>state.logged.loggedIn)
+  var stayLogged = localStorage.getItem("staylog")
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleLogOut= ()=>{
-    navigate("/login")
-    dispatch(logout())
-    console.log(loggedStatus)    
 
+  const handleLogOut= ()=>{
+    dispatch(logout())
+    navigate("/login")
   }
   
   return (
@@ -44,7 +45,6 @@ export const Navbar = () => {
                 <button className="btn btn-outline-danger" onClick={()=>{navigate("/register")}}type="button">
                     Register
                 </button>
-            
             </>
             :<button className="btn btn-outline-danger" onClick={()=>{handleLogOut()}}>Logout</button>}
             

@@ -61,7 +61,6 @@ const Login = () => {
           {navigate('/expdashboard')
           dispatch(login())
           // dispatch(loginExpert())
-          navigate('/expdashboard')
         }
         else{
           setLoginError("Wait for admin approval")

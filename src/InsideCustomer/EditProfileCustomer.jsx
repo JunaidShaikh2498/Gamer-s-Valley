@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { customereducer, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileCustomer = () => {
     const [formValid, setFormValid] = useState(false);
@@ -10,7 +11,7 @@ const EditProfileCustomer = () => {
   };
   const handleChange = (key, value) => {
         const ipObj = validate(key, value);
-        setuser({
+        setCustomer({
         type: "insert",
         fld: key,
         data: {
@@ -21,10 +22,10 @@ const EditProfileCustomer = () => {
         },
         });
         if (
-            user.firstname.valid &&
-            user.lastname.valid &&
-            user.email.valid &&
-            user.password.valid
+            customer.firstname.valid &&
+            customer.lastname.valid &&
+            customer.email.valid &&
+            customer.password.valid
         )   {
                 setFormValid(true);
             }
@@ -102,12 +103,12 @@ const EditProfileCustomer = () => {
               valid = true;
             }
             return { error, valid };
-            case "username":
+            case "customername":
               var unamep = /^[a-z0-9_]+$/
     
               valid = unamep.test(value);
               if (!valid) {
-                error = "Username not valid";
+                error = "customername not valid";
               }
               return { error, valid };
           default:
@@ -117,18 +118,18 @@ const EditProfileCustomer = () => {
     
       const updateCustomer = (e) => {
         e.preventDefault();
-        console.log(user);
+        console.log(customer);
         const options = {
           method: "PUT",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
-            firstname: user.firstname.value,
-            lastname: user.lastname.value,
-            email: user.email.value,
-            contact:user.contact.value,
-            address:user.address.value,
-            username: user.username.value,
-            password: user.password.value            
+            firstname: customer.firstname.value,
+            lastname: customer.lastname.value,
+            email: customer.email.value,
+            contact:customer.contact.value,
+            address:customer.address.value,
+            customername: customer.customername.value,
+            password: customer.password.value            
           })
       };
       fetch("http://localhost:8080/updateC/:regId",options)
@@ -150,7 +151,7 @@ const EditProfileCustomer = () => {
         email: { value: "", valid: false, touched: false, error: "" },
         contact:{ value: "", valid: false, touched: false, error: "" },
         address:{ value: "", valid: false, touched: false, error: "" },
-        username:{value: "", valid: false, touched: false, error: ""},
+        customername:{value: "", valid: false, touched: false, error: ""},
         password: { value: "", valid: false, touched: false, error: "" }
       };
     
@@ -164,7 +165,7 @@ const EditProfileCustomer = () => {
             return {};
         }
     };
-    const [customer, setCustomer] = useReducer(reducer, initDetails);
+    const [customer, setCustomer] = customereducer(reducer, initDetails);
   return (
     <div>
         <h2>Edit Customer Profile</h2>
@@ -181,7 +182,7 @@ const EditProfileCustomer = () => {
         <br />
         <label>
           Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          <input type="email" name="email" value={customer.email} onChange={handleChange} />
         </label>
         <br />
         <label>
@@ -195,8 +196,8 @@ const EditProfileCustomer = () => {
         </label>
         <br />
         <label>
-          Username:
-          <input type="text" name="username" value={customer.username.value} onChange={handleChange} />
+          customername:
+          <input type="text" name="customername" value={customer.customername.value} onChange={handleChange} />
         </label>
         <br />
         <label>
