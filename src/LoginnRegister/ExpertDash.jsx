@@ -1,17 +1,8 @@
-<<<<<<< HEAD
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../Slices/loginSlice'
 import '../Navbar/Card.css';
-=======
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { logout } from "../Slices/loginSlice";
-//import { Navbar } from '../Navbar/Navbar'
-import "../Navbar/Card.css";
->>>>>>> 3f6517ef48435ebc43ab3d9ed86f5cac450e43bf
 
 const Card = ({ title, text, buttonText, onClick }) => {
   return (

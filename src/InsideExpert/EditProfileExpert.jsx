@@ -49,7 +49,7 @@ const EditProfileExpert = () => {
         password: expert.password.value
       })
     };
-    fetch("http://localhost:8080/update/:regId",options)
+    fetch(`http://localhost:8080/update/:regId`,options)
     .then(res=> res.json())
     .then((data)=>{setIsUp(data)
     if(isUp==="Updated Successfully")
@@ -61,11 +61,7 @@ const EditProfileExpert = () => {
     }
     })
 
-<<<<<<< HEAD
     //console.log(formData);
-=======
-   
->>>>>>> 3f6517ef48435ebc43ab3d9ed86f5cac450e43bf
     };
     const validate = (key, value) => {
       let valid = true;
