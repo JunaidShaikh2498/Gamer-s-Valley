@@ -17,8 +17,12 @@ import { ViewFAQ } from './Admin/ViewFAQ';
 import { ViewForum } from './Admin/ViewForum';
 import { ViewProd } from './Admin/ViewProd';
 import { useSelector } from 'react-redux';
-import ExpertDash from './LoginnRegister/ExpertDash';
+import CustomerDash from './LoginnRegister/CustomerDash'
+import EditProfileCustomer from './InsideCustomer/EditProfileCustomer';
+import ExpertDash from './LoginnRegister/ExpertDash.jsx';
 import EditProfileExpert from './InsideExpert/EditProfileExpert';
+import LoginwImage from './LoginnRegister/LoginwImage';
+
 function App() {
   const loggedStatus = useSelector(((state) => state.logged.loggedIn))
   const role = useSelector(state=>state.logged.role)
@@ -30,14 +34,13 @@ function App() {
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/custdashboard' element={<CustomerDash/>}/>
+          <Route path='/cust' element={<CustomerDash/>}/>
           <Route path='/custdashboard/editProfile' element={<EditProfileCustomer />} />
           <Route path='/expdashboard' element={<ExpertDash/>}/>
-          <Route path='/expdashboard/editProfile' element={<EditProfileExpert/>}/>
+          <Route path='/editProfileE' element={<EditProfileExpert/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/home' element={<CategoryPage/>}/>
-          <Route path='/expdashboard' element={<ExpertDash/>}/>
           <Route path='/browse_cat' element={<Browse/>}/>
           <Route path='/admin' element={<AdminHome/>}/>
           <Route path='/expert_list' element={<ViewExpert/>}/>
@@ -45,7 +48,12 @@ function App() {
           <Route path='/view_faq' element={<ViewFAQ/>}/>
           <Route path='/view_forum' element={<ViewForum/>}/>
           <Route path='/view_prod' element={<ViewProd/>}/>
+          <Route path='/lwi' element={<LoginwImage/>}/>
         </Routes>
+
+        
+        
+
     </div>
     </>
   );

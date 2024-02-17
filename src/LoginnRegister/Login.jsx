@@ -53,12 +53,12 @@ const Login = () => {
         case 2:
           dispatch(login())
           // dispatch(loginCustomer())
-          navigate('/home')
+          navigate('/cust')
           dispatch(login())
           break
         case 3:
           if(data.approved===1)
-          {navigate('/expdashboard')
+          {
           dispatch(login())
           // dispatch(loginExpert())
           navigate('/expdashboard')

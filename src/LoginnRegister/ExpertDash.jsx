@@ -15,6 +15,7 @@ const Card = ({ title, text, buttonText, onClick }) => {
   );
 };
 const ExpertDash = () => {
+  
   const dispatch = useDispatch()
   
   const navigate = useNavigate()
@@ -25,17 +26,18 @@ const ExpertDash = () => {
     navigate('/login')
   }
   const editProfile = ()=>{
-    navigate("/expdashboard/editProfile")
+    navigate("/editProfileE")
   }
   const answerFAQs = ()=>{
     navigate("/expdashboard/answerFAQs")
   }
   const viewCats = ()=>{
     navigate("/home")
-
+  }
   const visitForum = ()=>{
     navigate("/expdashboard/visitForum")
   }
+  
   
   return (
     <>
@@ -71,5 +73,5 @@ const ExpertDash = () => {
     
   )
 }
-}
+
 export default ExpertDash
