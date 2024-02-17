@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../Slices/loginSlice'
-import { Navbar } from '../Navbar/Navbar'
 import '../Navbar/Card.css';
 
 const Card = ({ title, text, buttonText, onClick }) => {

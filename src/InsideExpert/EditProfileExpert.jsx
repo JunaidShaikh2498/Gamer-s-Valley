@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import './EditProfile.css'
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileExpert = () => {
       
@@ -60,7 +61,7 @@ const EditProfileExpert = () => {
     }
     })
 
-    console.log(formData);
+    //console.log(formData);
     };
     const validate = (key, value) => {
       let valid = true;

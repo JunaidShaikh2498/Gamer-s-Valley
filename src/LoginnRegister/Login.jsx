@@ -20,7 +20,7 @@ const Login = () => {
 
   const [reg_id,setRegId]=useState()
   const [approved,setApproved]=useState()
-  const [userame,setUsenname]=useState("")
+  const [username,setUsername]=useState("")
   const [role_id,setRoleId]=useState()
 
   const handleLogin = (e) => {
@@ -39,7 +39,7 @@ const Login = () => {
       console.log(data);
       setApproved(data.approved)
       setRegId(data.registrationId)
-      setUsenname(data.username)
+      setUsername(data.username)
       setRoleId(data.roleId)
       switch(data.roleId){
         case 1:
