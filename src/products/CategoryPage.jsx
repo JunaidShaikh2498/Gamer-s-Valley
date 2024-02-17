@@ -1,34 +1,34 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import './Prod.css';
-import pro from '../Photos/processorCat.jpg';
-import mob from '../Photos/motherboardCat.avif';
-import gpu from '../Photos/gpuCat.avif';
-import ram from '../Photos/ramCat.jpg';
-import ssd from '../Photos/ssdCat.jpg';
-import hdd from '../Photos/hddCat.jpg';
-import cases from '../Photos/cpucaseCat.jpg';
-import  coolf from '../Photos/coolingfanCat.jpg';
-import keyb from '../Photos/keyboardCat.avif';
-import mouse from '../Photos/mouseCat.avif';
-import heads from '../Photos/headsetsCat.avif';
+import "./Prod.css";
+import pro from "../Photos/processorCat.jpg";
+import mob from "../Photos/motherboardCat.avif";
+import gpu from "../Photos/gpuCat.avif";
+import ram from "../Photos/ramCat.jpg";
+import ssd from "../Photos/ssdCat.jpg";
+import hdd from "../Photos/hddCat.jpg";
+import cases from "../Photos/cpucaseCat.jpg";
+import coolf from "../Photos/coolingfanCat.jpg";
+import keyb from "../Photos/keyboardCat.avif";
+import mouse from "../Photos/mouseCat.avif";
+import heads from "../Photos/headsetsCat.avif";
+import { useNavigate } from "react-router-dom";
 
-
-
-const products = [
-  { id: 1, name: 'Processors', price: '$10',image:pro,description:'Nice phone!!'},
-  { id: 2, name: 'Motherboards', price: '$20',image:mob,description:'Nice phone!!' },
-  { id: 3, name: 'GPU', price: '$30',image:gpu,description:'Nice phone!!' },
-  { id: 4, name: 'RAM', price: '$40',image:ram,description:'Nice phone!!' },
-  { id: 5, name: 'SSD', price: '$50',image:ssd,description:'Nice phone!!' },
-  { id: 6, name: 'HDD', price: '$60',image:hdd,description:'Nice phone!!' },
-  { id: 7, name: 'CPU cases', price: '$60',image:cases,description:'Nice phone!!' },
-  { id: 8, name: 'Cooling Fans', price: '$60',image:coolf,description:'Nice phone!!' },
-  { id: 9, name: 'Keyboards', price: '$60',image:keyb,description:'Nice phone!!' },
-  { id: 10, name: 'Mouses', price: '$60',image:mouse,description:'Nice phone!!' },
-  { id: 11, name: 'Headsets', price: '$60',image:heads,description:'Nice phone!!' }
+const categoryImages = [
+  { image: pro },
+  { image: mob },
+  { image: gpu },
+  { image: ram },
+  { image: ssd },
+  { image: hdd },
+  { image: cases },
+  { image: coolf },
+  { image: keyb },
+  { image: mouse },
+  { image: heads },
 ];
 
+<<<<<<< HEAD
 const cartHandler = (e) => {
   window.location.href = '/home';
 };
@@ -71,6 +71,63 @@ const CategoryList = () => {
     },[]);
   const categoryCards = cats.map((u) => (
     <CategoryCard key={u.categoryId} product={u} />
+=======
+
+
+const ProductCard = ({ categories }) => {
+  const navigate = useNavigate()
+  
+const cartHandler = (categories) => {
+  navigate("/browse_cat",{state:{categories}});
+ };
+  console.log(categories);
+  return (
+    <div className="product-card">
+      <div className="card">
+        <div className="card-img">
+          {/* {categories.map((cat)=>{
+      return(
+        
+      )
+    })} */}
+          <img
+            src={categoryImages[0].image}
+            alt="no image"
+            className="card-img"
+          />
+        </div>
+        <div className="card-info">
+          <p className="text-title">{categories.categoryName} </p>
+          <p className="text-body">{categories.categoryDescription}</p>
+        </div>
+        <div className="card-footer">
+          <div className="card-button">
+            <svg className="svg-icon" viewBox="0 0 20 20" onClick={()=>cartHandler(categories)}>
+              <path
+                fill="currentColor"
+                d="M6.554 9.639a.5.5 0 0 0 .707.707l2.667-2.677a.25.25 0 0 0 0-.354L7.261 4.639a.5.5 0 0 0-.707.707L8.2 7H1.5a.5.5 0 0 0 0 1h6.7ZM12 1H5.5a.5.5 0 0 0 0 1h6a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H5.25a.5.5 0 0 0 0 1H12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CategoryList = () => {
+  const [cats, setCats] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8080/home")
+      .then((resp) => resp.json())
+      .then((data) => {
+        setCats(data);
+        console.log(data);
+      });
+  }, []);
+  const productCards = cats.map((category) => (
+    <ProductCard key={category.Category_Id} categories={category} />
+>>>>>>> 3f6517ef48435ebc43ab3d9ed86f5cac450e43bf
   ));
 
   const rows = categoryCards.reduce((result, row, index) => {
@@ -94,7 +151,6 @@ const CategoryList = () => {
 
 const CategoryPage = () => {
   return (
-    
     <div className="product-page">
       <h1>Categories</h1>
       <CategoryList />

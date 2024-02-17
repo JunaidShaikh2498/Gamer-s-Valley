@@ -55,6 +55,15 @@ const RegisterCustomer = () => {
           error = "Invalid email";
         }
         return { error, valid };
+      
+      case "contact":
+        var contp = /^\d{10}$/
+        valid = contp.test(value);
+        if (!valid) {
+          error = "Contact number should be 10 digit";
+        }
+        return { error, valid };
+      
       case "password":
         var digit = /[\d]{1,}/;
         var special = /[\W_!@#$%^&]{1,}/;

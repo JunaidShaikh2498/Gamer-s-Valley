@@ -1,22 +1,25 @@
 import React from 'react'
 import './AdminCards.css';
+import { useNavigate } from 'react-router-dom';
 
 
 export const AdminHome = () => {
+    const navigate = useNavigate()
+
     const ViewExpert = (e) => {
-        window.location.href = '/expert_list';
+       navigate('/expert_list') ;
       };
       const ViewCat = (e) => {
-        window.location.href = '/view_cat';
+       navigate('/view_cat') ;
       };
       const ViewProd = (e) => {
-        window.location.href = '/view_prod';
+       navigate('/view_prod') ;
       };
       const ViewFAQs = (e) => {
-        window.location.href = '/view_faq';
+       navigate('/view_faq') ;
       };
       const ViewForums = (e) => {
-        window.location.href = '/view_forum';
+       navigate('/view_forum') ;
       };
   return (
     <div className='centered-container'>
@@ -43,7 +46,7 @@ export const AdminHome = () => {
                 view
             </button>
          </div>
-         <div className="card">
+         {/* <div className="card">
             <p className="heading">
                 View Products
             </p>
@@ -53,7 +56,7 @@ export const AdminHome = () => {
             <button onClick={ViewProd}>
                 view
             </button>
-         </div>
+         </div> */}
          <div className="card">
             <p className="heading">
                 View Forum
