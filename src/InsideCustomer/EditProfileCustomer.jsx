@@ -1,6 +1,7 @@
 import React, { customereducer, useState } from 'react'
 import './EditProfileC.css'
 import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileCustomer = () => {
     const [formValid, setFormValid] = useState(false);

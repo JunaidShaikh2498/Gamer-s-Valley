@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import './CustExpertCards.css';
 
 const Card = ({ title, text, buttonText, onClick }) => {
   return (

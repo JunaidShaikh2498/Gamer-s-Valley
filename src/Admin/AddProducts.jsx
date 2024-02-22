@@ -6,6 +6,7 @@ const AddProducts = () => {
 
     const {state} = useLocation()
     const{cat}=state||{}
+    console.log(cat);
     const [product,setProduct]= useState({
         productName : "",
         productDescription : "",
@@ -23,7 +24,8 @@ const AddProducts = () => {
                 productPrice : product.productPrice
             })
         }
-        fetch(`http://localhost:8080/addProduct/${cat.categoryId}`)
+
+        fetch(`http://localhost:8080/addProduct/${cat.categoryId}`,options)
         .then((res)=>{
             if(!res.ok){
                 throw new Error("Something went wrong")

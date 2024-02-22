@@ -22,12 +22,11 @@ const Login = () => {
 
   const [reg_id,setRegId]=useState()
   const [approved,setApproved]=useState()
-  const [userame,setUsenname]=useState("")
+  const [username,setUsername]=useState("")
   const [role_id,setRoleId]=useState()
 
   const handleLogin = (e) => {
     e.preventDefault();
-
     const options={
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -42,7 +41,7 @@ const Login = () => {
       console.log(data);
       setApproved(data.approved)
       setRegId(data.registrationId)
-      setUsenname(data.username)
+      setUsername(data.username)
       setRoleId(data.roleId)
       switch(data.roleId){
         case 1:
@@ -61,7 +60,6 @@ const Login = () => {
           {
           dispatch(login())
           // dispatch(loginExpert())
-          navigate('/expdashboard')
         }
         else{
           setLoginError("Wait for admin approval")
