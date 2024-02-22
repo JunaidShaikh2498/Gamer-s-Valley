@@ -61,11 +61,7 @@ const EditProfileExpert = () => {
     }
     })
 
-<<<<<<< HEAD
-    //console.log(formData);
-=======
    
->>>>>>> 3f6517ef48435ebc43ab3d9ed86f5cac450e43bf
     };
     const validate = (key, value) => {
       let valid = true;

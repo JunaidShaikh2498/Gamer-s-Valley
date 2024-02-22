@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import "./Prod.css";
+
 import pro from "../Photos/processorCat.jpg";
 import mob from "../Photos/motherboardCat.avif";
 import gpu from "../Photos/gpuCat.avif";
@@ -28,57 +28,13 @@ const categoryImages = [
   { image: heads },
 ];
 
-<<<<<<< HEAD
-const cartHandler = (e) => {
-  window.location.href = '/home';
-};
-
-
-const CategoryCard = ({ category}) => (
-  
-  <div className="product-card">
-    {/*<div className="product-image"> <img src={product.image} style={{height:'200px'}}/> </div>
-    <div className="product-name">{product.name}</div>
-    <div className="product-price">{product.price}</div>
-<span className="product-description">{product.description}</span>*/}
-    <div className="card">
-  <div className="card-img" >
-    <img src={cases} alt='no image' className='card-img'/>
-    </div>
-
-  <div className="card-info">
-    <p className="text-title">{category.categoryName} </p>
-    <p className="text-body">{category.categoryDescription}</p>
-  </div>
-  <div className="card-footer">
-    {/*<span className="text-title">{category.price}</span>*/}
-    <div className="card-button">
-      <svg className="svg-icon" viewBox="0 0 20 20" onClick={cartHandler}>
-        <path fill="currentColor" d="M6.554 9.639a.5.5 0 0 0 .707.707l2.667-2.677a.25.25 0 0 0 0-.354L7.261 4.639a.5.5 0 0 0-.707.707L8.2 7H1.5a.5.5 0 0 0 0 1h6.7ZM12 1H5.5a.5.5 0 0 0 0 1h6a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H5.25a.5.5 0 0 0 0 1H12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1" />
-</svg>
-    </div>
-  </div>
-</div>
-  </div>
-);
-
-const CategoryList = () => {
-  const[cats,setCats]=useState([])
-    useEffect(()=>{
-        fetch("http://localhost:8080/home")
-        .then(resp=>resp.json())
-        .then(data=>setCats(data))
-    },[]);
-  const categoryCards = cats.map((u) => (
-    <CategoryCard key={u.categoryId} product={u} />
-=======
 
 
 const ProductCard = ({ categories }) => {
   const navigate = useNavigate()
   
 const cartHandler = (categories) => {
-  navigate("/browse_cat",{state:{categories}});
+  navigate("/products",{state:{categories}});
  };
   console.log(categories);
   return (
@@ -127,10 +83,9 @@ const CategoryList = () => {
   }, []);
   const productCards = cats.map((category) => (
     <ProductCard key={category.Category_Id} categories={category} />
->>>>>>> 3f6517ef48435ebc43ab3d9ed86f5cac450e43bf
   ));
 
-  const rows = categoryCards.reduce((result, row, index) => {
+  const rows = productCards.reduce((result, row, index) => {
     if (index % 3 === 0) {
       result.push([]);
     }
