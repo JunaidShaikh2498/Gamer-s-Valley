@@ -17,7 +17,6 @@ import { ViewCat } from './Admin/ViewCat';
 import { ViewFAQ } from './Admin/ViewFAQ';
 import { ViewForum } from './Admin/ViewForum';
 import { ViewProd } from './Admin/ViewProd';
-import { FaqList } from './FAQs/FaqList';
 import CustomerDash from './LoginnRegister/CustomerDash'
 import EditProfileCustomer from './InsideCustomer/EditProfileCustomer';
 
