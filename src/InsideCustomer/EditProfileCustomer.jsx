@@ -9,6 +9,7 @@ const EditProfileCustomer = () => {
   const backToCustDash = ()=>{
     navigate("/custdashboard");
   };
+  
   const handleChange = (key, value) => {
         const ipObj = validate(key, value);
         setCustomer({
@@ -115,7 +116,7 @@ const EditProfileCustomer = () => {
             return {};
         }
       };
-    
+      const customerId = JSON.parse(localStorage.getItem("customerId"))
       const updateCustomer = (e) => {
         e.preventDefault();
         console.log(customer);
@@ -132,7 +133,7 @@ const EditProfileCustomer = () => {
             password: customer.password.value            
           })
       };
-      fetch("http://localhost:8080/updateC/:regId",options)
+      fetch(`http://localhost:8080/updateC/${customerId}`,options)
         .then(res=> res.json())
         .then((data)=>{setIsUp(data)
         if(isUp==="Updated Successfully")
