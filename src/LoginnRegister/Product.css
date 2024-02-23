@@ -2,9 +2,17 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    opacity: 0.9;
+    background-image: url(../projectphotos/two-chair.jpeg);
+    background-size: contain;
+    background-attachment: fixed;
+    
   }
   
+  .productlist{
+    background-image: url(../projectphotos/two-chair.jpeg);
+    background-size: contain;
+    background-attachment: fixed;
+  }
   .product-card {
     width: 200px;
     margin: 10px;
@@ -13,6 +21,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+    opacity: 0.9;
   }
   
   .product-card h3 {
@@ -25,7 +34,7 @@
 
   .product-container{
     padding-top: 20px;
-    background-image: url(../BgImages/slider.jpeg);
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url(../projectphotos/two-chair.jpeg);
+    background-size: contain;
+    background-attachment: fixed;
   }

@@ -12,8 +12,14 @@
     gap: 20px;
     box-sizing: border-box;
     border-radius: 16px;
+    
   }
-  
+  .form-body{
+    width: 100%;
+    background-image: url(../projectphotos/retro-wallpaper.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
   .form-container button:active {
     scale: 0.95;
   }

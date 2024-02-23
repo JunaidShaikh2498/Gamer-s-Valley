@@ -1,17 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import React from "react";
 import './ViewExp.css';
 
   export const ViewExpert = () => {
-    const [experts, setExperts] = useState([]);
+    const [expertList,setExpertList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const user = JSON.parse(localStorage.getItem("user"))
   
     useEffect(() => {
-      fetch("http://localhost:8080/expert_list")
+      fetch("http://localhost:8080/expert_list"
+      ,{
+        method: 'GET',
+        headers: {Authorization: `Bearer ${user.accessToken}`}
+      }
+      )
         .then(resp => resp.json())
-        .then(data => setExperts(data))
+        .then(d => {
+          //console.log(d);
+          // localStorage.setItem("experts",JSON.stringify(data))
+          setExpertList(d);          
+          console.log(JSON.stringify(expertList));
+        })
         .catch(error => console.error('Error fetching expert data:', error))
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false)
+          console.log(loading);
+        }
+        );
+          
     }, []);
   
     const handleClick = async (registrationId, currentApproval) => {
@@ -22,6 +38,7 @@ import './ViewExp.css';
       try {
         const response = await fetch(url, {
           method: 'PUT',
+          headers:{"Authorization":`Bearer ${user.accessToken}`}
         });
   
         if (!response.ok) {
@@ -29,7 +46,7 @@ import './ViewExp.css';
         }
   
         // Update the local state after the database is updated
-        setExperts(prevExperts =>
+        setExpertList(prevExperts =>
           prevExperts.map(expert =>
             expert.registered.registrationId === registrationId
               ? {
@@ -67,27 +84,37 @@ import './ViewExp.css';
             </tr>
           </thead>
           <tbody>
-            {experts
-              .filter(user => user.registered.approved !== null)
-              .map((user) => (
-                <tr key={user.expertId}>
-                  <td>{user.expertId}</td>
-                  <td>{user.firstname}</td>
-                  <td>{user.lastname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.qualification}</td>
-                  <td>{user.registered.registrationId}</td>
-                  <td>{user.registered.approved}</td>
+            {/* <p> {JSON.stringify(expertList)}</p> */}
+            {/* {
+              expertList.map(u => (
+                <tr>
+                   <td>{u.firstname}</td>
+                  <td>{u.lastname}</td>
+                  
+                </tr>
+              ))
+            } */}
+            {expertList
+              .filter(u => u.registered.approved !== null) 
+              .map((u) => (
+                <tr key={u.expertId}>
+                  <td>{u.expertId}</td>
+                  <td>{u.firstname}</td>
+                  <td>{u.lastname}</td>
+                  <td>{u.email}</td>
+                  <td>{u.qualification}</td>
+                  <td>{u.registered.registrationId}</td>
+                  <td>{u.registered.approved}</td>
                   <td>
-                    <button onClick={() => handleClick(user.registered.registrationId, user.registered.approved)}>
-                      {user.registered.approved ? 'Revoke' : 'Grant'}
-                    </button>
+                     <button onClick={() => handleClick(u.registered.registrationId, u.registered.approved)}>
+                      {u.registered.approved ? 'Revoke' : 'Grant'}
+                    </button> 
                   </td>
                 </tr>
-              ))}
+              ))} 
           </tbody>
         </table>
-      )}
+      )} 
     </div>
   );
 };

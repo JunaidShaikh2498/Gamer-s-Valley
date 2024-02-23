@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 export const ViewCat = () => {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"))
   const [categories, setCategories] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/home")
+    fetch("http://localhost:8080/cats",{
+      method: 'GET',
+      headers: {Authorization: `Bearer ${user.accessToken}`}
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Categories not found");

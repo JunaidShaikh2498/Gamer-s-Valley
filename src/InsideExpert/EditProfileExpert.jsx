@@ -1,13 +1,16 @@
 import React, { useReducer, useState } from 'react'
 import './EditProfile.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const EditProfileExpert = () => {
       
   const [formValid, setFormValid] = useState(false);
-
+  const user = JSON.parse(localStorage.getItem("user"))
+  const location = useLocation()
+  const {updateExpertData}= location.state
+  //console.log(updateExpertData);
   const navigate = useNavigate()
- const [isUp,setIsUp]=useState("")
+ const [isUp,setIsUp]=useState(false)
   const handleChange = (key, value) => {
     const ipObj = validate(key, value);
     setExpert({
@@ -24,45 +27,12 @@ const EditProfileExpert = () => {
       expert.firstname.valid &&
       expert.lastname.valid &&
       expert.email.valid &&
-      expert.username.valid &&
-      expert.password.valid
+      expert.username.valid 
     ) {
       setFormValid(true);
     }
   };
-    const backToExpertDash = ()=>{
-      navigate("/expdashboard");
-    };
     
-    const updateExpert = (e) => {
-    e.preventDefault();
-    console.log(expert);
-    const options = {
-      method: "PUT",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        firstname: expert.firstname.value,
-        lastname: expert.lastname.value,
-        email: expert.email.value,
-        qualification: expert.qualification.value,
-        username:expert.username.value,
-        password: expert.password.value
-      })
-    };
-    fetch(`http://localhost:8080/update/:regId`,options)
-    .then(res=> res.json())
-    .then((data)=>{setIsUp(data)
-    if(isUp==="Updated Successfully")
-    {
-      navigate('/expdashboard')
-    }
-    else{
-      navigate('/expdashboard/editProfile')
-    }
-    })
-
-    //console.log(formData);
-    };
     const validate = (key, value) => {
       let valid = true;
       let error = "";
@@ -89,44 +59,6 @@ const EditProfileExpert = () => {
             error = "Invalid email id";
           }
           return { error, valid };
-        case "password":
-          var digit = /[\d]{1,}/;
-          var special = /[\W_!@#$%^&]{1,}/;
-          var capital = /[A-Z]{1,}/;
-          var isCapital;
-          var isDigit;
-          var isSpecial;
-  
-          isCapital = capital.test(value);
-          isDigit = digit.test(value);
-          isSpecial = special.test(value);
-  
-          if ((value.length < 5) || (isCapital || isDigit || isSpecial)) {
-            // $("#strength").html("Weak").css("color","red")
-            error = "Weak password";
-            valid = false;
-          }
-          if (isCapital && isDigit) {
-            // $("#strength").html("Average").css("color","Orange")
-            error = "Average password";
-            valid = false;
-          }
-          if (isCapital && isSpecial) {
-            // $("#strength").html("Average").css("color","Orange")
-            error = "Average password";
-            valid = false;
-          }
-          if (isDigit && isSpecial) {
-            // $("#strength").html("Average").css("color","Orange")
-            error = "Average password";
-            valid = false;
-          }
-          if (isCapital && isDigit && isSpecial) {
-            // $("#strength").html("Strong").css("color","green")
-            error = "";
-            valid = true;
-          }
-          return { error, valid };
           case "username":
             var unamep = /^[a-z0-9_]+$/
   
@@ -140,12 +72,11 @@ const EditProfileExpert = () => {
       }
     };
     const initDetails = {
-      firstname: { value: "", valid: false, touched: false, error: "" },
-      lastname: { value: "", valid: false, touched: false, error: "" },
-      email: { value: "", valid: false, touched: false, error: "" },
-      username: { value: "", valid: false, touched: false, error: ""},
-      password: { value: "", valid: false, touched: false, error: "" },
-      qualification: {value: "", valid: false, touched: false, error: "" },
+      firstname: { value: updateExpertData.firstname, valid: true, touched: false, error: "" },
+      lastname: { value: updateExpertData.lastname, valid: true, touched: false, error: "" },
+      email: { value: updateExpertData.email, valid: true, touched: false, error: "" },
+      username: { value: updateExpertData.username, valid: true, touched: false, error: ""},
+      qualification: {value: updateExpertData.qualification, valid: true, touched: false, error: "" }
     };
 
     const reducer = (state, action) => {
@@ -160,6 +91,42 @@ const EditProfileExpert = () => {
     };
     const [expert, setExpert] = useReducer(reducer, initDetails);
 
+    const backToExpertDash = ()=>{
+      navigate("/expdashboard");
+    };
+    
+    const updateExpert = (e) => {
+    e.preventDefault();
+    //console.log(expert);
+    const options = {
+      method: "PUT",
+      headers: { 'Authorization': `Bearer ${user.accessToken}`,"content-type": "application/json" },
+      body: JSON.stringify({
+        firstname: expert.firstname.value,
+        lastname: expert.lastname.value,
+        email: expert.email.value,
+        qualification: expert.qualification.value,
+        username:expert.username.value
+      })
+    };
+    fetch(`http://localhost:8080/update/${user.id}`,options)
+    .then(res=> res.json())
+    .then((data)=>{
+      console.log(data);
+    if(data===true)
+    {
+      localStorage.removeItem("username")
+      localStorage.setItem("username",expert.username.value)
+      navigate('/expdashboard')
+    }
+    else{
+      navigate('/expdashboard/editProfileE')
+    }
+    })
+
+    //console.log(formData);
+    };
+
   return (
     <div className="edit-profile-container">
       <h2>Edit Profile</h2>
@@ -171,8 +138,9 @@ const EditProfileExpert = () => {
          id="firstname"
          name="firstname"
          value={expert.firstname.value}
-         onChange={handleChange}
+         onChange={(e)=>handleChange("firstname",e.target.value)}
        />
+       <div>{expert.firstname.error}</div>
       </div>
       <div className="form-group">
       <label htmlFor="lastName">Last Name:</label>
@@ -181,8 +149,9 @@ const EditProfileExpert = () => {
          id="lastname"
          name="lastname"
          value={expert.lastname.value}
-         onChange={handleChange}
+         onChange={(e)=>handleChange("lastname",e.target.value)}
        />
+       <div>{expert.lastname.error}</div>
       </div>
       <div className="form-group">
       <label htmlFor="email">Email:</label>
@@ -191,8 +160,9 @@ const EditProfileExpert = () => {
          id="email"
          name="email"
          value={expert.email.value}
-         onChange={handleChange}
+         onChange={(e)=>handleChange("email",e.target.value)}
        />
+       <div>{expert.email.error}</div>
       </div>
       <div className="form-group">
       <label htmlFor="qualification">Qualification:</label>
@@ -201,8 +171,9 @@ const EditProfileExpert = () => {
          id="qualification"
          name="qualification"
          value={expert.qualification.value}
-         onChange={handleChange}
+         onChange={(e)=>handleChange("qualification",e.target.value)}
        />
+      <div>{expert.qualification.error}</div>
       </div>
       <div className="form-group">
       <label htmlFor="username">Username:</label>
@@ -211,20 +182,11 @@ const EditProfileExpert = () => {
          id="username"
          name="username"
          value={expert.username.value}
-         onChange={handleChange}
+         onChange={(e)=>handleChange("username",e.target.value)}
        />
+       <div>{expert.username.error}</div>
       </div>
-      <div className="form-group">
-      <label htmlFor="password">Password:</label>
-      <input
-         type="password"
-         id="password"
-         name="password"
-         value={expert.password.value}
-         onChange={handleChange}
-       />
-      </div>
-    <button className='btn btn-primary' onClick={(e)=>{updateExpert(e)}}>Save Changes</button>
+    <button className='btn btn-primary' disabled={!formValid} onClick={(e)=>{updateExpert(e)}}>Save Changes</button>
     <button className='btn btn-secondary' onClick={()=>{backToExpertDash()}}>Cancel</button>
   </form>
 </div>

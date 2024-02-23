@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 const UpdateProductPrice = () => {
   
   const location = useLocation()
-
+  const user = JSON.parse(localStorage.getItem("user"))
   const {product} = location.state
     console.log(product);
   const [stateProduct,setStateProduct]=useState(
@@ -23,7 +23,7 @@ const UpdateProductPrice = () => {
     e.preventDefault()
     const options={
         method:"PUT",
-        headers:{"content-type":"application/json"},
+        headers:{"Authorization":`Bearer ${user.accessToken}`,"content-type":"application/json"},
         body:JSON.stringify({
             productPrice:price
         })

@@ -1,13 +1,14 @@
-import React, { customereducer, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useReducer, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const EditProfileCustomer = () => {
     const [formValid, setFormValid] = useState(false);
-
-  const navigate = useNavigate()
-  const [isUp,setIsUp]=useState("")  
-  const backToCustDash = ()=>{
-    navigate("/custdashboard");
+    const user = JSON.parse(localStorage.getItem("user"))
+    const updateCust = JSON.parse(localStorage.getItem("updatecust") )
+    const navigate = useNavigate()
+    const [isUp,setIsUp]=useState("")  
+    const backToCustDash = ()=>{
+    navigate("/homepage");
   };
   const handleChange = (key, value) => {
         const ipObj = validate(key, value);
@@ -25,7 +26,8 @@ const EditProfileCustomer = () => {
             customer.firstname.valid &&
             customer.lastname.valid &&
             customer.email.valid &&
-            customer.password.valid
+            customer.contact.valid &&
+            customer.username.valid
         )   {
                 setFormValid(true);
             }
@@ -121,23 +123,50 @@ const EditProfileCustomer = () => {
         console.log(customer);
         const options = {
           method: "PUT",
-          headers: { "content-type": "application/json" },
+          headers: { 'Authorization': `Bearer ${user.accessToken}`,"content-type": "application/json" },
           body: JSON.stringify({
             firstname: customer.firstname.value,
             lastname: customer.lastname.value,
             email: customer.email.value,
             contact:customer.contact.value,
             address:customer.address.value,
-            customername: customer.customername.value,
-            password: customer.password.value            
+            username: customer.username.value,
+                      
           })
       };
-      fetch("http://localhost:8080/updateC/:regId",options)
-        .then(res=> res.json())
+      fetch(`http://localhost:8080/updateC/${updateCust.customerId}`,options)
+      .then((response)=>{
+        if(!response.ok){
+            throw new Error("Something went wrong")
+        }
+        else{
+            return response.json()
+        }
+    })
         .then((data)=>{setIsUp(data)
         if(isUp==="Updated Successfully")
         {
-        navigate('/custdashboard')
+          navigate('/homepage')
+          fetch(`http://localhost:8080/getcust/${updateCust.customerId}`,{
+            method:"GET",
+            headers:{"Authorization":`Bearer ${user.accessToken}`}
+          })
+          .then((response)=>{
+            if(!response.ok){
+                throw new Error("Something went wrong")
+            }
+            else{
+                return response.json()
+            }
+        })
+        .then((data)=>{
+          if(data){
+            localStorage.removeItem("updatecust")
+            localStorage.setItem("updatecust",JSON.stringify(data))
+            
+          }
+        })
+        
         }
         else{
         navigate('/custdashboard/editProfile')
@@ -146,13 +175,12 @@ const EditProfileCustomer = () => {
     };
 
     const initDetails = {
-        firstname: { value: "", valid: false, touched: false, error: "" },
-        lastname: { value: "", valid: false, touched: false, error: "" },
-        email: { value: "", valid: false, touched: false, error: "" },
-        contact:{ value: "", valid: false, touched: false, error: "" },
-        address:{ value: "", valid: false, touched: false, error: "" },
-        customername:{value: "", valid: false, touched: false, error: ""},
-        password: { value: "", valid: false, touched: false, error: "" }
+        firstname: { value: updateCust.firstname, valid: false, touched: false, error: "" },
+        lastname: { value: updateCust.lastname, valid: false, touched: false, error: "" },
+        email: { value: updateCust.email, valid: false, touched: false, error: "" },
+        contact:{ value: updateCust.contact, valid: false, touched: false, error: "" },
+        address:{ value: updateCust.address, valid: false, touched: false, error: "" },
+        username:{value: updateCust.registered.username, valid: false, touched: false, error: ""},
       };
     
     const reducer = (state, action) => {
@@ -165,45 +193,41 @@ const EditProfileCustomer = () => {
             return {};
         }
     };
-    const [customer, setCustomer] = customereducer(reducer, initDetails);
+    const [customer, setCustomer] = useReducer(reducer, initDetails);
   return (
     <div>
         <h2>Edit Customer Profile</h2>
       <form className="edit-profile-form">
         <label>
           First Name:
-          <input type="text" name="firstName" value={customer.firstname.value} onChange={handleChange} />
+          <input type="text" name="firstname" value={customer.firstname.value} onChange={(e)=>handleChange("firstname",e.target.value)} />
         </label>
         <br />
         <label>
           Last Name:
-          <input type="text" name="lastName" value={customer.lastname.value} onChange={handleChange} />
+          <input type="text" name="lastname" value={customer.lastname.value} onChange={(e)=>handleChange("lastname",e.target.value)} />
         </label>
         <br />
         <label>
           Email:
-          <input type="email" name="email" value={customer.email} onChange={handleChange} />
+          <input type="email" name="email" value={customer.email.value} onChange={(e)=>handleChange("email",e.target.value)} />
         </label>
         <br />
         <label>
           Contact:
-          <input type="text" name="contact" value={customer.contact.value} onChange={handleChange} />
+          <input type="text" name="contact" value={customer.contact.value} onChange={(e)=>handleChange("contact",e.target.value)} />
         </label>
         <br />
         <label>
           Address:
-          <input type="text" name="address" value={customer.address.value} onChange={handleChange} />
+          <input type="text" name="address" value={customer.address.value} onChange={(e)=>handleChange("address",e.target.value)} />
         </label>
         <br />
         <label>
           customername:
-          <input type="text" name="customername" value={customer.customername.value} onChange={handleChange} />
+          <input type="text" name="username" value={customer.username.value} onChange={(e)=>handleChange("username",e.target.value)} />
         </label>
         <br />
-        <label>
-          Password:
-          <input type="password" name="password" value={customer.password.value} onChange={handleChange} />
-        </label>
         <br />
         <button className='btn btn-primary' onClick={(e)=>{updateCustomer(e)}}>Save Changes</button>
         <button className='btn btn-secondary' onClick={()=>{backToCustDash()}}>Cancel</button>

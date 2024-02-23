@@ -14,6 +14,7 @@ import mouse from "../Photos/mouseCat.avif";
 import heads from "../Photos/headsetsCat.avif";
 import { useNavigate } from "react-router-dom";
 
+
 const categoryImages = [
   { image: pro },
   { image: mob },
@@ -34,9 +35,9 @@ const ProductCard = ({ categories }) => {
   const navigate = useNavigate()
   
 const cartHandler = (categories) => {
-  navigate("/browse_cat",{state:{categories}});
+  navigate("/custdash",{state:{categories}});
  };
-  console.log(categories);
+ // console.log(categories);
   return (
     <div className="product-card">
       <div className="card">
@@ -48,8 +49,8 @@ const cartHandler = (categories) => {
     })} */}
           <img
             src={categoryImages[0].image}
-            alt="no image"
             className="card-img"
+            alt="Not Found"
           />
         </div>
         <div className="card-info">
@@ -72,15 +73,24 @@ const cartHandler = (categories) => {
 };
 
 const CategoryList = () => {
+  const user = JSON.parse(localStorage.getItem("user"))
   const [cats, setCats] = useState([]);
+  
   useEffect(() => {
-    fetch("http://localhost:8080/home")
+    fetch("http://localhost:8080/home",
+    {
+      method:"GET",
+      headers:{"Authorization":`Bearer ${user.accessToken}`}
+    })
       .then((resp) => resp.json())
       .then((data) => {
         setCats(data);
-        console.log(data);
+        //console.log(data);
       });
   }, []);
+
+  
+
   const productCards = cats.map((category) => (
     <ProductCard key={category.Category_Id} categories={category} />
   ));
@@ -94,7 +104,7 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div className="product-list">
+    <div className="product-list col">
       {rows.map((row, index) => (
         <div key={index} className="product-row-group">
           {row}
@@ -105,10 +115,48 @@ const CategoryList = () => {
 };
 
 const CategoryPage = () => {
+  const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem("user"))
+  const[updateCust,setUpdateCust]=useState()
+  useEffect(()=>{
+    fetch(`http://localhost:8080/getCustByRegId/${user.id}`,{
+              method:"GET",
+              headers:{"Authorization":`Bearer ${user.accessToken}`}
+        })
+        .then(resp =>{
+          if(!resp.ok){
+            throw new Error("Not found")
+          }
+          else{
+            return resp.json()
+          }
+        })
+        .then((data)=>{
+          //console.log(data);
+          setUpdateCust(data)
+        })
+  })
+
+  
+  
+  const handleUpdate=(e)=>{
+    e.preventDefault()
+    console.log(updateCust);
+    localStorage.setItem("updatecust",JSON.stringify(updateCust))
+    navigate('/custdashboard/editProfile',{state:{updateCust}})
+  }
+
   return (
     <div className="product-page">
-      <h1>Categories</h1>
-      <CategoryList />
+      <div className="row align-items-center">
+        <div className="forum-col col">
+        <button className="btn btn-outline-secondary" onClick={(e)=>{handleUpdate(e)}}>Edit Profile</button>
+          <h1>Having Doubts?</h1>
+          <button className="btn btn-outline-info" onClick={()=>{navigate("/forums")}}>RAISE A QUESTION</button>
+        </div>
+        <CategoryList />
+      </div>
+      
     </div>
   );
 };
