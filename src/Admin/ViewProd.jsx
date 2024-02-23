@@ -6,7 +6,7 @@ export const ViewProd = () => {
 
   const location =  useLocation()
   const{cat}=location.state||{}
-
+  const user = JSON.parse(localStorage.getItem("user"))
   const [products,setProducts]= useState([])
   console.log(cat);
 
@@ -14,7 +14,10 @@ export const ViewProd = () => {
     navigate("/updatePrice",{state:{product}})
   }
   useEffect(()=>{
-    fetch(`http://localhost:8080/products/${cat.categoryName}`)
+    fetch(`http://localhost:8080/products/${cat.categoryName}`,{
+      method: 'GET',
+      headers: {Authorization: `Bearer ${user.accessToken}`}
+    })
     .then((response)=>{return response.json()})
     .then((data)=>{setProducts(data)})
   },[])
@@ -22,7 +25,7 @@ export const ViewProd = () => {
 
     <div className='product-container'>
       <div style={{display:"flex", justifyContent:"flex-end"}}>
-        <button className="btn btn-outline-secondary"  onClick={()=>{navigate('/addproduct',{ state: { cat } })}}>Add product</button>
+        <button className="btn btn-secondary"  onClick={()=>{navigate('/addproduct',{ state: { cat } })}}>Add product</button>
       </div>
         <div className="product-list">
         {products.map((product, index) => (
@@ -30,7 +33,7 @@ export const ViewProd = () => {
             <h3>{product.productName}</h3>
             <p>{product.productDescription}</p>
             <p>{product.productPrice}</p>
-            <button className='btn btn-secondary' onClick={()=>{handleUpdate(product)}}>Update Price</button>
+            <button className='btn btn-info' onClick={()=>{handleUpdate(product)}}>Update Price</button>
           </div>
         ))}
         </div>

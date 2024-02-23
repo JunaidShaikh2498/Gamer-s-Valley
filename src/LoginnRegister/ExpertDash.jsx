@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import { logout } from '../Slices/loginSlice'
-import '../Navbar/Card.css';
+import '../LoginnRegister/Card.css';
 
 const Card = ({ title, text, buttonText, onClick }) => {
   return (
@@ -15,42 +15,68 @@ const Card = ({ title, text, buttonText, onClick }) => {
 };
 const ExpertDash = () => {
   const dispatch = useDispatch();
- // const location = useLocation()
-
-  // const {data} = location.state
-
-  // useEffect(()=>{
-  //   fetch("http://localhost")
-  // },[])
+ 
+  const expertData = JSON.parse(localStorage.getItem("expert"))
+  const user = JSON.parse(localStorage.getItem("user"))
+  const username = expertData.username
+  console.log(username);
+  
+  const [updateExpertData,setUpdateExpert]=useState({
+      username:expertData.registered.username,
+      firstname:expertData.firstname,
+      lastname:expertData.lastname,
+      qualification:expertData.qualification,
+      email:expertData.email,
+      registrationId:expertData.registered.registrationId
+  })
+  
+ 
+  //  useEffect(()=>{
+  //    fetch(`http://localhost:8080/getexpert/${expertData.registrationId}`,
+  //    {
+  //       method:"GET",
+  //       headers: {Authorization: `Bearer ${user.accessToken}`}
+  //    })
+  //    .then(response=>{return response.json()})
+  //    .then((data)=>{setUpdateExpert({
+  //     username:expertData.username,
+  //     firstname:data.firstname,
+  //     lastname:data.lastname,
+  //     qualification:data.qualification,
+  //     email:data.email,
+  //     registrationId:expertData.registrationId
+  //    })})
+  //  },[])
   const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.clear();
     navigate("/login");
   };
   const editProfile = () => {
-    navigate("/editProfileE",);
+    navigate("/editProfileE",{state:{updateExpertData}});
   };
   const answerFAQs = () => {
-    navigate("/expdashboard/answerFAQs");
+    navigate("/answerFAQs");
   };
   const viewCats = () => {
     navigate("/home");
   }
     const visitForum = () => {
-      navigate("/expdashboard/visitForum");
+      navigate("/forums");
     };
 
     return (
       <div>
 
         <div className="hello">
-          <h1 id="h1">Welcome Expert</h1>
+          <h1 id="h1">Welcome {localStorage.getItem("username")===null?username:localStorage.getItem("username")}</h1>
           <div className="buttons-container">
-            <button id="edit-profile-button" onClick={()=>editProfile()}>
+            <button className='btn btn-outline-success' id="edit-profile-button" onClick={()=>editProfile()}>
               Edit Profile
             </button>
-            <button id="logout-button" onClick={()=>{handleLogout()}}>
+            <button id="logout-button" className='btn btn-outline-danger' onClick={()=>{handleLogout()}}>
               Logout
             </button>
           </div>

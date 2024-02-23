@@ -1,0 +1,6 @@
+.question-container{
+    height: 100vh;
+    background-image: url(../projectphotos/Expert.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}

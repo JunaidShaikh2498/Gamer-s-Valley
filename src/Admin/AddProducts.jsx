@@ -7,6 +7,9 @@ const AddProducts = () => {
     const {state} = useLocation()
     const{cat}=state||{}
     console.log(cat);
+
+    const user = JSON.parse(localStorage.getItem("user"))
+
     const [product,setProduct]= useState({
         productName : "",
         productDescription : "",
@@ -17,7 +20,7 @@ const AddProducts = () => {
         e.preventDefault()
         const options = {
             method: "POST",
-            headers:{"content-type":"application/json"},
+            headers:{"Authorization":`Bearer ${user.accessToken}`,"content-type":"application/json"},
             body: JSON.stringify({
                 productName : product.productName ,
                 productDescription : product.productDescription ,
@@ -44,6 +47,7 @@ const AddProducts = () => {
         })
     }
   return (
+    <div className='form-body'>
     <div class="form-container">
       <form class="form">
         <div class="form-group">
@@ -70,6 +74,7 @@ const AddProducts = () => {
         <button class="form-submit-btn" onClick={(e)=>{addProd(e)}}>Add Product</button>
       </form>
       <h2>{productStatus}</h2>
+    </div>
     </div>
   )
 }

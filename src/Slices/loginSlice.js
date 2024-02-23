@@ -9,10 +9,14 @@ export const loggedSlice = createSlice({
   reducers: {
     login(state) {
       state.loggedIn = true;
+      localStorage.setItem("loginStat",JSON.stringify(state.loggedIn))
       
     },
     logout(state) {
+      localStorage.removeItem("loginStat")
       state.loggedIn = false;
+      localStorage.setItem("loginStat",JSON.stringify(state.loggedIn))
+      localStorage.clear()
     },
   },
 });

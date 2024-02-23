@@ -24,16 +24,28 @@ import EditProfileCustomer from './InsideCustomer/EditProfileCustomer';
 
 import ExpertDash from './LoginnRegister/ExpertDash.jsx';
 import EditProfileExpert from './InsideExpert/EditProfileExpert';
+import ProductFilter from './products/ProductFilter';
+import AddProducts from './Admin/AddProducts';
+import EditProfileCustomer from './InsideCustomer/EditProfileCustomer';
+import Product from './LoginnRegister/Product';
+import UpdateProductPrice from './Admin/UpdateProductPrice';
+import Home from './Navbar/Home';
+import ViewCart from './LoginnRegister/ViewCart';
+import OrderPlaced from './LoginnRegister/OrderPlaced';
+import CustomerBuying from './LoginnRegister/CustomerBuying';
+import CategorizedProd from './products/CategorizedProd';
+import AskAQuestion from './Forum/AskAQuestion';
+import AddFAQs from './Forum/AddFAQs';
+import ForumPage from './Forum/ForumPage';
+
 function App() {
-  const loggedStatus = useSelector(((state) => state.logged.loggedIn))
-  const role = useSelector(state=>state.logged.role)
+  
   return (
     <>
-    
     <Navbar/>
     <div className="App">
         <Routes>
-          <Route path='/' element={<Product/>}/>
+          <Route path='/' element={<ProductFilter/>}/>
           <Route path='/re' element={<RegisterExpert/>}/>
           <Route path='/rc' element={<RegisterCustomer/>}/>
           <Route path='/login' element={<Login/>}/>
@@ -43,7 +55,8 @@ function App() {
           <Route path='/expdashboard/editProfile' element={<EditProfileExpert/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/register' element={<Register/>}/>
-          <Route path='/home' element={<CategoryPage/>}/>
+          <Route path='/homepage' element={<CategoryPage/>}/>
+          <Route path='/home' element={<Home/>}/>
           <Route path='/expdashboard' element={<ExpertDash/>}/>
           <Route path='/browse_cat' element={<Browse/>}/>
           <Route path='/admin' element={<AdminHome/>}/>
@@ -52,6 +65,9 @@ function App() {
           <Route path='/view_faq' element={<ViewFAQ/>}/>
           <Route path='/view_forum' element={<ViewForum/>}/>
           <Route path='/view_prod' element={<ViewProd/>}/>
+          <Route path ='/addproduct' element={<AddProducts/>}/>
+          <Route path='/updatePrice' element ={<UpdateProductPrice/>}/>
+          <Route path='/allProds' element={<ProductFilter/>}/>
         </Routes>
 
         

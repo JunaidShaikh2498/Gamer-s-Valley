@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Product.css";
+//import { useLocation } from "react-router-dom";
 const Product = () => {
+  // const location = useLocation()
+  // const{cat} = location.state
+  // console.log(cat);
   useEffect(() => {
-    fetch("http://localhost:8080/getallprods")
+    fetch(`http://localhost:8080/getallprods`)
       .then((response) => {
         return response.json();
       })

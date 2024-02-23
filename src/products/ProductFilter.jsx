@@ -1,18 +1,44 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from "react";
+import "../LoginnRegister/Product.css"
 const ProductFilter = () => {
   const [products, setProducts] = useState([]);
+  const[categories,setCategories]=useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [priceFilter, setPriceFilter] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [priceFilter, setPriceFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   useEffect(() => {
     // Fetch products from the API
-    fetch('http://localhost:8080/allProds')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error('Error fetching products:', error));
+    fetch("http://localhost:8080/getallprods")
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .then(()=>{
+        fetch("http://localhost:8080/cats")
+        .then((resp)=>{
+          if(!resp.ok){
+            throw new Error("No categories found")
+          }
+          else{
+            return resp.json()
+          }
+        })
+        .then((cats)=>{
+          console.log(cats);
+          setCategories(cats)
+          console.log(categories);
+        })
+        .catch(()=>{
+          console.log("Error");
+        })
+      })
+      .catch((error) => console.error("Error fetching products:", error));
   }, []);
+
+
+   
+
+    
+ 
 
   useEffect(() => {
     // Apply filters when priceFilter or categoryFilter change
@@ -24,48 +50,59 @@ const ProductFilter = () => {
 
     // Apply price filter
     if (priceFilter) {
-      filtered = filtered.filter(product => product.productPrice <= parseFloat(priceFilter));
+      filtered = filtered.filter(
+        (product) => product.productPrice <= parseFloat(priceFilter)
+      );
     }
 
     // Apply category filter
     if (categoryFilter) {
-      filtered = filtered.filter(product => product.category.categoryName.toLowerCase() === categoryFilter.toLowerCase());
+      filtered = filtered.filter(
+        (product) =>
+          product.category.categoryName.toLowerCase() ===
+          categoryFilter.toLowerCase()
+      );
     }
 
     setFilteredProducts(filtered);
   };
 
   return (
-    <div>
+    <div className="productlist">
       <h2>Product Filter</h2>
 
       <div>
         <label>Filter by Price:</label>
         <input
+        className="filter-inputs"
           type="number"
           value={priceFilter}
-          onChange={e => setPriceFilter(e.target.value)}
+          onChange={(e) => setPriceFilter(e.target.value)}
         />
       </div>
 
       <div>
         <label>Filter by Category:</label>
-        <input
-          type="text"
-          value={categoryFilter}
-          onChange={e => setCategoryFilter(e.target.value)}
-        />
+        <select onChange={(e) => setCategoryFilter(e.target.value)}>
+              {categories.map((prod)=>{return(
+                <option value={prod.categoryName}>{prod.categoryName}</option>
+              )})}            
+        </select>
+          
+        
       </div>
 
       <div>
-        <h3>Filtered Products:</h3>
-        <ul>
-          {filteredProducts.map(product => (
-            <li key={product.productId}>
-              {product.productName} - {product.productPrice} - {product.category.categoryName}
-            </li>
-          ))}
-        </ul>
+        {filteredProducts.map((product,index) => (
+          
+          <div className="product-list">
+            <div key={index} className="product-card">
+              <h3>{product.productName}</h3>
+              <p>{product.productDescription}</p>
+              <p>{product.productPrice}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
