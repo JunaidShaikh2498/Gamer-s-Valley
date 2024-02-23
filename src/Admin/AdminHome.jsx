@@ -12,14 +12,13 @@ export const AdminHome = () => {
       const ViewCat = (e) => {
        navigate('/view_cat') ;
       };
-      const ViewProd = (e) => {
-       navigate('/view_prod') ;
-      };
-      const ViewFAQs = (e) => {
-       navigate('/view_faq') ;
-      };
+      
+      const ViewOrder = (e) => {
+        navigate('/orders') ;
+       };
+
       const ViewForums = (e) => {
-       navigate('/view_forum') ;
+       navigate('/forums') ;
       };
   return (
     <div className='centered-container'>
@@ -42,8 +41,8 @@ export const AdminHome = () => {
             <p>
                 You can add/remove/update the categories.
             </p>
-            <button onClick={ViewCat}>
-                view
+            <button  className='btn btn-outline-primary' onClick={ViewCat}>
+                View
             </button>
          </div>
          {/* <div className="card">
@@ -64,19 +63,19 @@ export const AdminHome = () => {
             <p>
                 You can add/update/remove the questions/answers
             </p>
-            <button onClick={ViewForums}>
-                view
+            <button className='btn btn-outline-primary' onClick={ViewForums}>
+                View
             </button>
          </div>
          <div className="card">
             <p className="heading">
-                View FAQs
+                View Orders
             </p>
             <p>
-                You can add/update/remove the question/answers.
+                You can view the placed orders
             </p>
-            <button onClick={ViewFAQs}>
-                view
+            <button  className='btn btn-outline-primary' onClick={ViewOrder}>
+                View
             </button>
          </div>
   </div>

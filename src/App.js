@@ -36,6 +36,7 @@ import CategorizedProd from './products/CategorizedProd';
 import AskAQuestion from './Forum/AskAQuestion';
 import AddFAQs from './Forum/AddFAQs';
 import ForumPage from './Forum/ForumPage';
+import { ViewOrders } from './Admin/ViewOrders';
 
 function App() {
   
@@ -73,6 +74,7 @@ function App() {
           <Route path = "/faqs" element ={<FaqList/>}/>
           <Route path = "/answerFAQs" element ={<AddFAQs/>}/>
           <Route path='/forums' element ={<ForumPage/>}/>
+          <Route path="/orders" element ={<ViewOrders/>}/>
         </Routes>
     </div>
     </>

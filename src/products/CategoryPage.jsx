@@ -135,7 +135,7 @@ const CategoryPage = () => {
           //console.log(data);
           setUpdateCust(data)
         })
-  })
+  },[])
 
   
   

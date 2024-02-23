@@ -46,7 +46,7 @@ const ForumPage = () => {
   return (
     <div>
       <h1>Forums</h1>
-      {user.roles[0] === "Customer" ?<button
+      {user.roles[0] === "Customer"?<button
         type="button"
         class="btn btn-outline-dark"
         style={{ display: "flex", justifyContent: "flex-end" }}
@@ -67,7 +67,7 @@ const ForumPage = () => {
           </h2>
           <h3>Answers</h3>
           {question.isOpen &&
-            (user.roles[0] === "Customer" ? (
+            (user.roles[0] === ("Customer"||"Admin") ? (
               <AnswerList questionId={question.questionId} />
             ) : (
               <AnswerQuestions questionId={question.questionId} />
