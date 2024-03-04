@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import './AddFromAdmin.css'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const AddProducts = () => {
 
     const {state} = useLocation()
     const{cat}=state||{}
     console.log(cat);
-
+    const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem("user"))
 
     const [product,setProduct]= useState({
@@ -72,6 +72,7 @@ const AddProducts = () => {
         </div>
         <button class="form-submit-btn" onClick={(e)=>{addProd(e)}}>Add Product</button>
       </form>
+      <button className='btn btn-outline-dark' onClick={()=>{navigate("/admin")}}>Go Back</button>
       <h2>{productStatus}</h2>
     </div>
     </div>

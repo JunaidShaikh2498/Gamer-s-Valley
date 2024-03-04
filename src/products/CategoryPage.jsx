@@ -150,6 +150,7 @@ const CategoryPage = () => {
     <div className="product-page">
       <div className="row align-items-center">
         <div className="forum-col col">
+        <button className="btn btn-outline-secondary" onClick={()=>{navigate("/feedbackform")}}>Give feedback</button>
         <button className="btn btn-outline-secondary" onClick={(e)=>{handleUpdate(e)}}>Edit Profile</button>
           <h1>Having Doubts?</h1>
           <button className="btn btn-outline-info" onClick={()=>{navigate("/forums")}}>RAISE A QUESTION</button>

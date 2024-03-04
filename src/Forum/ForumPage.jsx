@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AnswerList from "./AnswerList";
 import { useNavigate } from "react-router-dom";
 import AnswerQuestions from "./AnswerQuestions";
+import "./Forums.css"
 
 const ForumPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -44,11 +45,11 @@ const ForumPage = () => {
   };
 
   return (
-    <div>
+    <div className="forum-page">
       <h1>Forums</h1>
       {user.roles[0] === "Customer"?<button
         type="button"
-        class="btn btn-outline-dark"
+        class="btn btn-outline-light"
         style={{ display: "flex", justifyContent: "flex-end" }}
         onClick={() => {
           navigate("/askadvice");
@@ -58,21 +59,24 @@ const ForumPage = () => {
       </button>:<span></span>}
       
       {questions.map((question) => (
+        <>
         <div key={question.customer.questionId}>
           <h2
             onClick={() => handleAccordionClick(question.questionId)}
             style={{ cursor: "pointer" }}
           >
-            {question.question}
+           Q. {question.question}
           </h2>
           <h3>Answers</h3>
           {question.isOpen &&
-            (user.roles[0] === ("Customer"||"Admin") ? (
+            ((user.roles[0] === "Customer")||(user.roles[0]==="Admin") ? (
               <AnswerList questionId={question.questionId} />
-            ) : (
+            ) : 
               <AnswerQuestions questionId={question.questionId} />
-            ))}
+            )}
         </div>
+        <hr style={{width:"100%",color:"white"}}/>
+        </>
       ))}
     </div>
   );

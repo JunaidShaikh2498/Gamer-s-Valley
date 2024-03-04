@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../LoginnRegister/Product.css"
+import "./Prod.css"
 const ProductFilter = () => {
   const [products, setProducts] = useState([]);
   const[categories,setCategories]=useState([]);
@@ -84,18 +84,16 @@ const ProductFilter = () => {
       <div>
         <label>Filter by Category:</label>
         <select onChange={(e) => setCategoryFilter(e.target.value)}>
+              <option selected>Choose Category</option>
               {categories.map((prod)=>{return(
                 <option value={prod.categoryName}>{prod.categoryName}</option>
               )})}            
         </select>
-          
-        
       </div>
 
-      <div>
+      <div className="product-list">
         {filteredProducts.map((product,index) => (
-          
-          <div className="product-list">
+          <div>
             <div key={index} className="product-card">
               <h3>{product.productName}</h3>
               <p>{product.productDescription}</p>

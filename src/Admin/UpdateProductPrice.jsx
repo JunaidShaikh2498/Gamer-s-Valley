@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const UpdateProductPrice = () => {
   
   const location = useLocation()
+  const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem("user"))
   const {product} = location.state
     console.log(product);
@@ -47,7 +48,7 @@ const UpdateProductPrice = () => {
 
             <button className='btn btn-outline-dark' onClick={(e)=>{updatePrice(e)}}>Update</button>
         </form>
-
+        <button className='btn btn-outline-dark' onClick={()=>{navigate("/admin")}}>Go Back</button>
         <div><h2>{updated}</h2></div>
     </div>
   )

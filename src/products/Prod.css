@@ -81,6 +81,7 @@
   .product-list {
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
   }
 
   .forum-col{
@@ -95,6 +96,7 @@
     background-attachment: fixed;
     background-size: cover;
   }
+  
   .product-row-group {
     display: flex;
     margin-bottom: 20px;

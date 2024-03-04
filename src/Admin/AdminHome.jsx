@@ -9,6 +9,9 @@ export const AdminHome = () => {
     const ViewExpert = (e) => {
        navigate('/expert_list') ;
       };
+      const ViewFeedBack = (e) => {
+        navigate('/view_feedback') ;
+       };
       const ViewCat = (e) => {
        navigate('/view_cat') ;
       };
@@ -29,7 +32,7 @@ export const AdminHome = () => {
             <p>
                 You can approve/remove the experts.
             </p>
-            <button onClick={ViewExpert}>
+            <button className='btn btn-outline-primary' onClick={ViewExpert}>
                 view
             </button>
          </div>
@@ -52,7 +55,7 @@ export const AdminHome = () => {
             <p>
                 You can add/remove/update the products.
             </p>
-            <button onClick={ViewProd}>
+            <button onClick={ViewFeedBack}>
                 view
             </button>
          </div> */}

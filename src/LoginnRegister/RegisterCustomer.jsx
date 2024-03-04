@@ -174,6 +174,7 @@ const RegisterCustomer = () => {
   return (
     <div className="container">
         <form >
+        <div style={{display:"flex",justifyContent:"space-evenly"}}>
         <div class="mb-3">
           <label for="exampleInputFname" class="form-label">
             <b>First Name</b>
@@ -211,7 +212,9 @@ const RegisterCustomer = () => {
           />
           <span>{user.lastname.error}</span>
         </div>
+        </div>
 
+        <div style={{display:"flex",justifyContent:"space-around"}}>
         <div class="mb-3">
           <label for="email" class="form-label">
             <b>Email ID</b>
@@ -249,6 +252,7 @@ const RegisterCustomer = () => {
             }}
           />
           <span>{user.contact.error}</span>
+        </div>
         </div>
         <div class="mb-3">
           <label for="address" class="form-label">
@@ -320,6 +324,7 @@ const RegisterCustomer = () => {
           Register
         </button>
       </form>
+      <button className="btn btn-outline-primary" onClick={()=>{navigate("/")}}>Go back to home</button>
     </div>
   )
 }

@@ -196,7 +196,7 @@ const EditProfileCustomer = () => {
     const [customer, setCustomer] = useReducer(reducer, initDetails);
   return (
     <div>
-        <h2>Edit Customer Profile</h2>
+        
       <form className="edit-profile-form">
         <label>
           First Name:

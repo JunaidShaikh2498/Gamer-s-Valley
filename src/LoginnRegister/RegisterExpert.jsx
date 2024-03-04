@@ -3,7 +3,7 @@ import './RegisterCSS.css'
 import { useNavigate } from "react-router-dom";
 const RegisterExpert = () => {
   const [formValid, setFormValid] = useState(false);
-
+  const [status,setStatus]=useState("")
   const navigate = useNavigate()
  const [isReg,setIsReg]=useState(false)
   const handleChange = (key, value) => {
@@ -148,7 +148,11 @@ const RegisterExpert = () => {
     };
     console.log(options.body);
     fetch("http://localhost:8080/registered/saveExp",options)
-    .then((response)=>{return response.json()})
+    .then((response)=>{
+      if(!response.ok){
+        throw new Error("Cannot register")
+      }
+    })
     .then((data)=>{setIsReg(data)
       console.log(isReg,data);
       // if(data){
@@ -157,13 +161,11 @@ const RegisterExpert = () => {
       // else{
       //   navigate("/re")
       // }
-      switch(isReg){
-        case true:
-          navigate("/login")
-          break;
-        default:
-          alert("Expert not Registerd")
-          navigate("/re")
+      if(data===true){
+        navigate("/")
+      }
+      else{
+          setStatus("Email has been sent to you")
       }
     })
 
@@ -173,6 +175,7 @@ const RegisterExpert = () => {
   return (
     <div className="container">
       <form >
+        <div style={{display:"flex", justifyContent:"space-evenly"}}>
         <div class="mb-3">
           <label for="exampleInputFname" class="form-label">
           <b>  First Name</b>
@@ -210,6 +213,7 @@ const RegisterExpert = () => {
             }}
           />
           <span>{expert.lastname.error}</span>
+        </div>
         </div>
 
         <div class="mb-3">
@@ -301,6 +305,8 @@ const RegisterExpert = () => {
           Register
         </button>
       </form>
+      <h3>{status}</h3>
+      <button className="btn btn-outline-primary" onClick={()=>{navigate("/")}}>Go back to home</button>
     </div>
   );
 };

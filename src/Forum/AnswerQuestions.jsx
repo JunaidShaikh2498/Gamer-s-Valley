@@ -79,6 +79,7 @@ const AnswerQuestions = ({ questionId }) => {
                 <>
                   <h3>{ans.expert.firstname}</h3>
                   <li>{ans.answer}</li>
+                  <hr style={{width:"100%",color:"white"}}/>
                 </>
               )}
             </div>

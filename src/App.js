@@ -37,6 +37,8 @@ import AskAQuestion from './Forum/AskAQuestion';
 import AddFAQs from './Forum/AddFAQs';
 import ForumPage from './Forum/ForumPage';
 import { ViewOrders } from './Admin/ViewOrders';
+import FeedbackForm from './Admin/FeedbackForm';
+import ViewFeedback from './Admin/ViewFeedback';
 
 function App() {
   
@@ -71,10 +73,12 @@ function App() {
           <Route path='/placeOrder' element={<OrderPlaced/>}/>
           <Route path='/getprods' element={<CategorizedProd/>}/>
           <Route path='/askadvice' element={<AskAQuestion/>}/>
-          <Route path = "/faqs" element ={<FaqList/>}/>
-          <Route path = "/answerFAQs" element ={<AddFAQs/>}/>
+          <Route path="/faqs" element ={<FaqList/>}/>
+          <Route path="/answerFAQs" element ={<AddFAQs/>}/>
           <Route path='/forums' element ={<ForumPage/>}/>
           <Route path="/orders" element ={<ViewOrders/>}/>
+          <Route path ="/view_feedback" element = {<ViewFeedback/>}/>
+          <Route path ="/feedbackform" element={<FeedbackForm/>}/>
         </Routes>
     </div>
     </>

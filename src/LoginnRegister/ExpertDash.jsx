@@ -71,7 +71,7 @@ const ExpertDash = () => {
       <div>
 
         <div className="hello">
-          <h1 id="h1">Welcome {localStorage.getItem("username")===null?username:localStorage.getItem("username")}</h1>
+          <h1 id="h1">Welcome {expertData.firstname}</h1>
           <div className="buttons-container">
             <button className='btn btn-outline-success' id="edit-profile-button" onClick={()=>editProfile()}>
               Edit Profile

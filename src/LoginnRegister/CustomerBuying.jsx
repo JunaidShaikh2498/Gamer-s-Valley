@@ -76,9 +76,11 @@ navigate("/view_cart");}
 
   return (
     <div className='product-container'>
+      <button className="btn btn-secondary"  onClick={()=>{navigate("/homepage")}}>Go Back</button>
       <div style={{display:"flex", justifyContent:"flex-end"}}>
+
         <button className="btn btn-secondary"  onClick={()=>{handleViewCart()}}>View Cart</button>
-        <button className="btn btn-info"  onClick={()=>{navigate("/faqs")}}>FAQs</button>
+        {/* <button className="btn btn-info"  onClick={()=>{navigate("/faqs")}}>FAQs</button> */}
       </div>
         <div className="product-list">
         {products.map((product, index) => (

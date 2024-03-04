@@ -29,24 +29,19 @@ export const Navbar = () => {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
-            </li>
           </ul>
           {!stayLogged?
           <>
-                <button className="btn btn-outline-success" onClick={()=>{navigate("/login")}} type="button">
+                <button className="btn btn-dark" onClick={()=>{navigate("/login")}} type="button">
                 Login
                 </button>
             
             
-                <button className="btn btn-outline-danger" onClick={()=>{navigate("/register")}}type="button">
+                <button className="btn btn-light" onClick={()=>{navigate("/register")}}type="button">
                     Register
                 </button>
             </>
-            :<button className="btn btn-outline-danger" onClick={()=>{handleLogOut()}}>Logout</button>}
+            :<button className="btn btn-light" onClick={()=>{handleLogOut()}}>Logout</button>}
             
         </div>
       </div>
